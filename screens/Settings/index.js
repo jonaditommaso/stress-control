@@ -44,12 +44,12 @@ export default Settings;
 
 const styles = StyleSheet.create({
   containerOptions: {
-    marginTop: '50%'
+    marginTop: '10%'
   },
   optionContainer: {
     margin: 10,
     alignItems: 'center',
-    borderWidth: 1,
+    borderWidth: 2,
     borderColor: '#ccc',
     padding: 10,
     borderRadius: 8

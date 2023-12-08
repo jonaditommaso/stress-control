@@ -1,10 +1,10 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const PrimaryButton = ({ title, onChange, disabled }) => {
+const PrimaryButton = ({ title, onChange, disabled, width = 300 }) => {
   return (
-    <View style={{ width: 300 }}>
+    <View style={{ width }}>
       <TouchableOpacity onPress={onChange} style={styles.button} disabled={disabled}>
-        <Text style={{ fontSize: 18, textAlign: 'center' }}>{title}</Text>
+        <Text style={{ fontSize: 18, textAlign: 'center', color: 'white' }}>{title}</Text>
       </TouchableOpacity>
     </View>
   );
@@ -14,10 +14,9 @@ export default PrimaryButton;
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#aaf',
+    backgroundColor: '#212121',
     marginVertical: 10,
     borderWidth: 1,
-    borderColor: '#6874e7',
     borderRadius: 8,
     padding: 5
   }
