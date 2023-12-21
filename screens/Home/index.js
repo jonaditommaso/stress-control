@@ -6,6 +6,7 @@ import Task from '../../components/Task';
 import TaskModal from '../../components/TaskModal';
 import StressCircle from './StressCircle';
 import TimeSpent from './TimeSpent';
+import MovingComponent from '../../components/MovingContainer';
 
 const Home = () => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
@@ -47,11 +48,13 @@ const Home = () => {
         <TimeSpent />
         <StressCircle text='10' />
       </View>
-      <FlatList
-        data={tasks}
-        ListEmptyComponent={<Text style={{ fontFamily: 'Virgil' }}>No hsy items!</Text>}
-        renderItem={({ item }) => <Task item={item} />}
-      />
+      <MovingComponent move={tasks.length > 0}>
+        <FlatList
+          data={tasks}
+          ListEmptyComponent={<Text style={{ fontFamily: 'Virgil' }}>No hsy items!</Text>}
+          renderItem={({ item }) => <Task item={item} />}
+        />
+      </MovingComponent>
       {/* </ScrollView> */}
       <TaskModal
         visible={addTaskModalVisible}

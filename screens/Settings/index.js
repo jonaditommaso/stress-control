@@ -1,14 +1,16 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
 import ColorPicker from '../../components/ColorPicker';
 import { useState } from 'react';
 import LetterSize from './LetterSize';
 import Language from './Language';
 
 const Option = ({ option, onSelect }) => (
-  <View>
-    <Pressable onPress={() => onSelect(option)} style={styles.optionContainer}>
-      <Text style={styles.optionText}>{option.text}</Text>
-    </Pressable>
+  <View style={styles.optionContainer}>
+    <Text style={styles.optionText}>{option.text}</Text>
+    <View style={styles.optionBottom}>
+      <Text>Espanol</Text>
+      <Button title='Modificar' onPress={() => onSelect(option)} />
+    </View>
   </View>
 );
 
@@ -28,7 +30,7 @@ const Settings = () => {
   };
 
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.containerOptions}>
         {options.map((option) => (
           <Option key={option.text} option={option} onSelect={handleOptionSelect} />
@@ -43,18 +45,31 @@ const Settings = () => {
 export default Settings;
 
 const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#fafafa',
+    flex: 1
+  },
   containerOptions: {
-    marginTop: '10%'
+    marginTop: '5%'
   },
   optionContainer: {
     margin: 10,
-    alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#ccc',
+    alignItems: 'flex-start',
+    borderWidth: 1,
+    borderColor: '#E5E7EB',
     padding: 10,
-    borderRadius: 8
+    borderRadius: 8,
+    backgroundColor: 'white',
+    height: 100
   },
   optionText: {
-    fontSize: 20
+    fontSize: 20,
+    fontWeight: '600'
+  },
+  optionBottom: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: '5%'
   }
 });
