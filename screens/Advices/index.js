@@ -1,4 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const topics = [
   {
@@ -23,23 +24,28 @@ const topics = [
 
 const Advices = () => {
   return (
-    <View style={{ marginTop: 10 }}>
-      {topics.map((topic, index) => (
-        <View key={index} style={styles.containerAdvice}>
-          <View style={[styles.header, { backgroundColor: topic.background }]}>
-            <Text style={styles.headerTitle}>{topic.title}</Text>
-            <Text style={styles.headerSubtitle}>{topic.subtitle}</Text>
-          </View>
+    <LinearGradient
+      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      style={{ flex: 1 }}
+    >
+      <View style={{ marginTop: 10 }}>
+        {topics.map((topic, index) => (
+          <View key={index} style={styles.containerAdvice}>
+            <View style={[styles.header, { backgroundColor: topic.background }]}>
+              <Text style={styles.headerTitle}>{topic.title}</Text>
+              <Text style={styles.headerSubtitle}>{topic.subtitle}</Text>
+            </View>
 
-          <View style={styles.content}>
-            <Text>{topic.shortContent}</Text>
-            <Pressable style={styles.button}>
-              <Text>Leer más</Text>
-            </Pressable>
+            <View style={styles.content}>
+              <Text>{topic.shortContent}</Text>
+              <Pressable style={styles.button}>
+                <Text>Leer más</Text>
+              </Pressable>
+            </View>
           </View>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </LinearGradient>
   );
 };
 

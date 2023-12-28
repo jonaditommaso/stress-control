@@ -7,6 +7,7 @@ import TaskModal from '../../components/TaskModal';
 import StressCircle from './StressCircle';
 import TimeSpent from './TimeSpent';
 import MovingComponent from '../../components/MovingContainer';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Home = () => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
@@ -42,53 +43,58 @@ const Home = () => {
   ];
 
   return (
-    <View style={styles.homeContainer}>
-      {/* <ScrollView> */}
-      <View style={{ flexDirection: 'row' }}>
-        <TimeSpent />
-        <StressCircle text='10' />
-      </View>
-      <MovingComponent move={tasks.length > 0}>
-        <FlatList
-          data={tasks}
-          ListEmptyComponent={<Text style={{ fontFamily: 'Virgil' }}>No hsy items!</Text>}
-          renderItem={({ item }) => <Task item={item} />}
-        />
-      </MovingComponent>
-      {/* </ScrollView> */}
-      <TaskModal
-        visible={addTaskModalVisible}
-        setVisible={setAddTaskModalVisible}
-      >
-        <View style={styles.modal}>
-          <TextInput
-            value={modalTask?.text}
-            onChangeText={(value) => onChangeTask(value, 'text')}
-            style={styles.textInput}
-            placeholder='Nombre'
-          />
-          <View style={styles.taskTypeContainer}>
-            <View>
-              <Text style={{ textAlign: 'center', marginBottom: 5 }}>Tipo de tarea</Text>
-            </View>
-            <View style={styles.taskTypeOptions}>
-              {buttons.map((button, index) => (
-                <SecondaryButton
-                  key={index}
-                  title={button.title}
-                  onChange={() => onChangeTask(button.type, 'type')}
-                  selected={modalTask?.type === button.type}
-                />
-              ))}
-            </View>
-          </View>
-          <View style={{ alignSelf: 'center' }}>
-            <PrimaryButton title='Agregar' onChange={() => handleAddTask()} disabled={!modalTask?.text || !modalTask?.type} />
-          </View>
+    <LinearGradient
+      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.homeContainer}>
+        {/* <ScrollView> */}
+        <View style={{ flexDirection: 'row' }}>
+          <TimeSpent />
+          <StressCircle text='10' />
         </View>
-      </TaskModal>
-      <PrimaryButton title='Agregar tarea' onChange={() => setAddTaskModalVisible(true)} />
-    </View>
+        <MovingComponent move={tasks.length > 0}>
+          <FlatList
+            data={tasks}
+            ListEmptyComponent={<Text style={{ fontFamily: 'Virgil' }}>No hay items!</Text>}
+            renderItem={({ item }) => <Task item={item} />}
+          />
+        </MovingComponent>
+        {/* </ScrollView> */}
+        <TaskModal
+          visible={addTaskModalVisible}
+          setVisible={setAddTaskModalVisible}
+        >
+          <View style={styles.modal}>
+            <TextInput
+              value={modalTask?.text}
+              onChangeText={(value) => onChangeTask(value, 'text')}
+              style={styles.textInput}
+              placeholder='Nombre'
+            />
+            <View style={styles.taskTypeContainer}>
+              <View>
+                <Text style={{ textAlign: 'center', marginBottom: 5 }}>Tipo de tarea</Text>
+              </View>
+              <View style={styles.taskTypeOptions}>
+                {buttons.map((button, index) => (
+                  <SecondaryButton
+                    key={index}
+                    title={button.title}
+                    onChange={() => onChangeTask(button.type, 'type')}
+                    selected={modalTask?.type === button.type}
+                  />
+                ))}
+              </View>
+            </View>
+            <View style={{ alignSelf: 'center' }}>
+              <PrimaryButton title='Agregar' onChange={() => handleAddTask()} disabled={!modalTask?.text || !modalTask?.type} />
+            </View>
+          </View>
+        </TaskModal>
+        <PrimaryButton title='Agregar tarea' onChange={() => setAddTaskModalVisible(true)} />
+      </View>
+    </LinearGradient>
   );
 };
 

@@ -3,6 +3,7 @@ import ColorPicker from '../../components/ColorPicker';
 import { useState } from 'react';
 import LetterSize from './LetterSize';
 import Language from './Language';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Option = ({ option, onSelect }) => (
   <View style={styles.optionContainer}>
@@ -30,15 +31,20 @@ const Settings = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.containerOptions}>
-        {options.map((option) => (
-          <Option key={option.text} option={option} onSelect={handleOptionSelect} />
-        ))}
-      </View>
-      {selectedOption && selectedOption.component}
+    <LinearGradient
+      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.container}>
+        <View style={styles.containerOptions}>
+          {options.map((option) => (
+            <Option key={option.text} option={option} onSelect={handleOptionSelect} />
+          ))}
+        </View>
+        {selectedOption && selectedOption.component}
 
-    </View>
+      </View>
+    </LinearGradient>
   );
 };
 
@@ -46,7 +52,7 @@ export default Settings;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fafafa',
+    // backgroundColor: '#fafafa',
     flex: 1
   },
   containerOptions: {

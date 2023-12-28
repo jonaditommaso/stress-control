@@ -33,7 +33,7 @@ const MovingComponent = ({ children, move }) => {
         style={{
         //   width: 50,
           height: 300,
-          backgroundColor: '#fafafa',
+          backgroundColor: move ? '#fafafa' : 'transparent',
           ...(move && { transform: [{ translateY }] })
         }}
       >

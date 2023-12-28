@@ -24,33 +24,56 @@ export default function App () {
     <View style={styles.container}>
       <StatusBar style='auto' />
       <NavigationContainer>
-        <Tab.Navigator initialRouteName='Home'>
+        <Tab.Navigator
+          initialRouteName='Home' screenOptions={{
+            tabBarStyle: { backgroundColor: '#ff5858' },
+            tabBarLabelStyle: { color: 'white' },
+            tabBarActiveTintColor: 'white',
+            tabBarActiveColor: 'white'
+          }}
+        >
           <Tab.Screen
             name='Settings'
             component={Settings}
             options={{
-              tabBarIcon: () => <Ionicons name='ios-settings-outline' size={24} color='black' />
+              tabBarIcon: ({ color }) => <Ionicons name='ios-settings-outline' size={24} color={color} />,
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#8b5cf6'
+              }
             }}
           />
           <Tab.Screen
             name='Home'
             component={Home}
             options={{
-              tabBarIcon: () => <FontAwesome5 name='list' size={24} color='black' />
+              tabBarIcon: ({ color }) => <FontAwesome5 name='list' size={24} color={color} />,
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#8b5cf6'
+              }
             }}
           />
           <Tab.Screen
             name='Advices'
             component={Advices}
             options={{
-              tabBarIcon: () => <MaterialCommunityIcons name='list-status' size={24} color='black' />
+              tabBarIcon: ({ color }) => <MaterialCommunityIcons name='list-status' size={24} color={color} />,
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#8b5cf6'
+              }
             }}
           />
           <Tab.Screen
             name='Profile'
             component={Profile}
             options={{
-              tabBarIcon: () => <Ionicons name='person-circle-outline' size={28} color='black' />
+              tabBarIcon: ({ color }) => <Ionicons name='person-circle-outline' size={28} color={color} />,
+              headerTintColor: 'white',
+              headerStyle: {
+                backgroundColor: '#8b5cf6'
+              }
             }}
           />
         </Tab.Navigator>

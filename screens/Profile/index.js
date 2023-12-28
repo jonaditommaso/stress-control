@@ -2,35 +2,41 @@ import { View, StyleSheet, Image, Text } from 'react-native';
 import ContainerData from './ContainerData';
 import Divider from '../../components/Divider';
 import PrimaryButton from '../../components/PrimaryButton';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const Profile = () => {
   return (
-    <View style={styles.container}>
-      <Image source={require('../../assets/imgs/profile1.jpg')} style={styles.imageProfile} />
-      <Text style={styles.textName}>Juana Doe</Text>
+    <LinearGradient
+      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      style={{ flex: 1 }}
+    >
+      <View style={styles.container}>
+        <Image source={require('../../assets/imgs/profile1.jpg')} style={styles.imageProfile} />
+        <Text style={styles.textName}>Juana Doe</Text>
 
-      <View style={styles.tasksSection}>
-        <Text style={styles.textTitle}>Tareas</Text>
-        <Divider />
-        <View style={styles.tasksContainer}>
-          <ContainerData title='Totales' data={12} />
-          <ContainerData title='Completadas' data={8} />
-          <ContainerData title='Pendientes' data={4} />
+        <View style={styles.tasksSection}>
+          <Text style={styles.textTitle}>Tareas</Text>
+          <Divider />
+          <View style={styles.tasksContainer}>
+            <ContainerData title='Totales' data={12} />
+            <ContainerData title='Completadas' data={8} />
+            <ContainerData title='Pendientes' data={4} />
+          </View>
         </View>
-      </View>
 
-      <View style={styles.tasksSection}>
-        <Text style={styles.textTitle}>Intereses</Text>
-        <Divider />
-        <View style={styles.tasksContainer}>
-          <ContainerData title='Libros' />
-          <ContainerData title='Programación' />
-          <ContainerData title='Viajes' />
+        <View style={styles.tasksSection}>
+          <Text style={styles.textTitle}>Intereses</Text>
+          <Divider />
+          <View style={styles.tasksContainer}>
+            <ContainerData title='Libros' />
+            <ContainerData title='Programación' />
+            <ContainerData title='Viajes' />
+          </View>
         </View>
-      </View>
 
-      <PrimaryButton title='Editar perfil' width='90%' />
-    </View>
+        <PrimaryButton title='Editar perfil' width='90%' />
+      </View>
+    </LinearGradient>
   );
 };
 
