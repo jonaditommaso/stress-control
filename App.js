@@ -8,10 +8,20 @@ import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-ico
 import Home from './screens/Home';
 import Settings from './screens/Settings';
 import { useFonts } from 'expo-font';
+import { Provider } from 'react-redux';
+import { store } from './redux';
 
 const Tab = createBottomTabNavigator();
 
-export default function App () {
+const Root = () => (
+  <Provider store={store}>
+    <App />
+  </Provider>
+);
+
+export default Root;
+
+function App () {
   const [fontsLoaded] = useFonts({
     Virgil: require('./assets/fonts/Virgil.ttf')
   });

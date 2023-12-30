@@ -8,15 +8,22 @@ import StressCircle from './StressCircle';
 import TimeSpent from './TimeSpent';
 import MovingComponent from '../../components/MovingContainer';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import { useActions } from '../../hooks/useActions';
+import { addTask } from '../../redux/actions';
 
-const Home = () => {
+const Home = ({ currentTasks }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
   const [tasks, setTasks] = useState([]);
 
   const [modalTask, setModalTask] = useState({});
 
+  const { addTask } = useActions();
+
   const handleAddTask = () => {
-    setTasks([...tasks, modalTask]);
+    const task = { ...modalTask, status: 'pending' };
+    setTasks([...tasks, task]);
+    addTask(task);
     setModalTask('');
     setAddTaskModalVisible(false);
   };
@@ -98,7 +105,13 @@ const Home = () => {
   );
 };
 
-export default Home;
+const mapStateToProps = (state) => {
+  return {
+    currentTasks: state.tasks
+  };
+};
+
+export default connect(mapStateToProps, { addTask })(Home);
 
 const styles = StyleSheet.create({
   homeContainer: {

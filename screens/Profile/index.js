@@ -3,8 +3,12 @@ import ContainerData from './ContainerData';
 import Divider from '../../components/Divider';
 import PrimaryButton from '../../components/PrimaryButton';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
 
-const Profile = () => {
+const Profile = ({ currentTasks }) => {
+  const totalTasks = currentTasks?.tasks?.length;
+  const pendingTasks = (currentTasks?.tasks || []).filter(task => task.status === 'pending');
+
   return (
     <LinearGradient
       colors={['#8b5cf6', '#ec4899', '#ff5858']}
@@ -18,9 +22,9 @@ const Profile = () => {
           <Text style={styles.textTitle}>Tareas</Text>
           <Divider />
           <View style={styles.tasksContainer}>
-            <ContainerData title='Totales' data={12} />
-            <ContainerData title='Completadas' data={8} />
-            <ContainerData title='Pendientes' data={4} />
+            <ContainerData title='Totales' data={`${totalTasks}`} />
+            <ContainerData title='Completadas' data={`${totalTasks - pendingTasks.length}`} />
+            <ContainerData title='Pendientes' data={`${pendingTasks?.length}`} />
           </View>
         </View>
 
@@ -40,7 +44,13 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+const mapStateToProps = (state) => {
+  return {
+    currentTasks: state.tasks
+  };
+};
+
+export default connect(mapStateToProps, null)(Profile);
 
 const styles = StyleSheet.create({
   container: {
