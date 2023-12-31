@@ -1,3 +1,4 @@
 export const TYPES = {
-  TASKS: 'TASKS'
+  TASKS: 'TASKS',
+  STRESS: 'STRESS'
 };

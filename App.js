@@ -8,8 +8,9 @@ import { Ionicons, FontAwesome5, MaterialCommunityIcons } from '@expo/vector-ico
 import Home from './screens/Home';
 import Settings from './screens/Settings';
 import { useFonts } from 'expo-font';
-import { Provider } from 'react-redux';
+import { Provider, useSelector } from 'react-redux';
 import { store } from './redux';
+import { getStressColors } from './utils/constants';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,6 +23,8 @@ const Root = () => (
 export default Root;
 
 function App () {
+  const stress = useSelector(state => state.stress.stress);
+
   const [fontsLoaded] = useFonts({
     Virgil: require('./assets/fonts/Virgil.ttf')
   });
@@ -36,7 +39,7 @@ function App () {
       <NavigationContainer>
         <Tab.Navigator
           initialRouteName='Home' screenOptions={{
-            tabBarStyle: { backgroundColor: '#ff5858' },
+            tabBarStyle: { backgroundColor: getStressColors(stress)[2] },
             tabBarLabelStyle: { color: 'white' },
             tabBarActiveTintColor: 'white',
             tabBarActiveColor: 'white'
@@ -47,9 +50,8 @@ function App () {
             component={Settings}
             options={{
               tabBarIcon: ({ color }) => <Ionicons name='ios-settings-outline' size={24} color={color} />,
-              headerTintColor: 'white',
               headerStyle: {
-                backgroundColor: '#8b5cf6'
+                backgroundColor: getStressColors(stress)[0]
               }
             }}
           />
@@ -58,9 +60,8 @@ function App () {
             component={Home}
             options={{
               tabBarIcon: ({ color }) => <FontAwesome5 name='list' size={24} color={color} />,
-              headerTintColor: 'white',
               headerStyle: {
-                backgroundColor: '#8b5cf6'
+                backgroundColor: getStressColors(stress)[0]
               }
             }}
           />
@@ -69,9 +70,8 @@ function App () {
             component={Advices}
             options={{
               tabBarIcon: ({ color }) => <MaterialCommunityIcons name='list-status' size={24} color={color} />,
-              headerTintColor: 'white',
               headerStyle: {
-                backgroundColor: '#8b5cf6'
+                backgroundColor: getStressColors(stress)[0]
               }
             }}
           />
@@ -80,9 +80,8 @@ function App () {
             component={Profile}
             options={{
               tabBarIcon: ({ color }) => <Ionicons name='person-circle-outline' size={28} color={color} />,
-              headerTintColor: 'white',
               headerStyle: {
-                backgroundColor: '#8b5cf6'
+                backgroundColor: getStressColors(stress)[0]
               }
             }}
           />

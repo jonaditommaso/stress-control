@@ -21,3 +21,17 @@ export const LETTER_SIZES = [
   { label: 'M', size: 20 },
   { label: 'G', size: 28 }
 ];
+
+const STRESS_COLORS = {
+  quiet: ['#C1FFC1', '#3CB371', '#008000'],
+  tense: ['#FFE8A1', '#FFD966', '#f6b000'],
+  stressed: ['#FFD1DC', '#FF6F61', '#8B0000']
+};
+
+export const getStressColors = (stress) => {
+  if (stress >= 0 && stress <= 33) return STRESS_COLORS.quiet;
+
+  if (stress >= 34 && stress <= 65) return STRESS_COLORS.tense;
+
+  if (stress >= 66 && stress <= 100) return STRESS_COLORS.stressed;
+};

@@ -4,14 +4,15 @@ import Divider from '../../components/Divider';
 import PrimaryButton from '../../components/PrimaryButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
+import { getStressColors } from '../../utils/constants';
 
-const Profile = ({ currentTasks }) => {
+const Profile = ({ currentTasks, stress }) => {
   const totalTasks = currentTasks?.tasks?.length;
   const pendingTasks = (currentTasks?.tasks || []).filter(task => task.status === 'pending');
 
   return (
     <LinearGradient
-      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
@@ -46,7 +47,8 @@ const Profile = ({ currentTasks }) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentTasks: state.tasks
+    currentTasks: state.tasks,
+    stress: state.stress.stress
   };
 };
 

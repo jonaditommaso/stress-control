@@ -5,14 +5,15 @@ import SecondaryButton from '../../components/SecondaryButton';
 import Task from '../../components/Task';
 import TaskModal from '../../components/TaskModal';
 import StressCircle from './StressCircle';
-import TimeSpent from './TimeSpent';
+// import TimeSpent from './TimeSpent';
 import MovingComponent from '../../components/MovingContainer';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { useActions } from '../../hooks/useActions';
 import { addTask } from '../../redux/actions';
+import { getStressColors } from '../../utils/constants';
 
-const Home = ({ currentTasks }) => {
+const Home = ({ currentTasks, stress }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
   const [tasks, setTasks] = useState([]);
 
@@ -51,13 +52,13 @@ const Home = ({ currentTasks }) => {
 
   return (
     <LinearGradient
-      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
       <View style={styles.homeContainer}>
         {/* <ScrollView> */}
         <View style={{ flexDirection: 'row' }}>
-          <TimeSpent />
+          {/* <TimeSpent /> */}
           <StressCircle text='10' />
         </View>
         <MovingComponent move={tasks.length > 0}>
@@ -107,7 +108,8 @@ const Home = ({ currentTasks }) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentTasks: state.tasks
+    currentTasks: state.tasks,
+    stress: state.stress.stress
   };
 };
 

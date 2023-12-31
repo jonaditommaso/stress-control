@@ -4,6 +4,8 @@ import { useState } from 'react';
 import LetterSize from './LetterSize';
 import Language from './Language';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import { getStressColors } from '../../utils/constants';
 
 const Option = ({ option, onSelect }) => (
   <View style={styles.optionContainer}>
@@ -15,7 +17,7 @@ const Option = ({ option, onSelect }) => (
   </View>
 );
 
-const Settings = () => {
+const Settings = ({ stress }) => {
   const [selectedOption, setSelectedOption] = useState(null);
 
   const options = [
@@ -32,7 +34,7 @@ const Settings = () => {
 
   return (
     <LinearGradient
-      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
@@ -48,7 +50,13 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+const mapStateToProps = (state) => {
+  return {
+    stress: state.stress.stress
+  };
+};
+
+export default connect(mapStateToProps, null)(Settings);
 
 const styles = StyleSheet.create({
   container: {

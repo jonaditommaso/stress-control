@@ -1,5 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
+import { connect } from 'react-redux';
+import { getStressColors } from '../../utils/constants';
 
 const topics = [
   {
@@ -22,10 +24,10 @@ const topics = [
   }
 ];
 
-const Advices = () => {
+const Advices = ({ stress }) => {
   return (
     <LinearGradient
-      colors={['#8b5cf6', '#ec4899', '#ff5858']}
+      colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
       <View style={{ marginTop: 10 }}>
@@ -49,7 +51,13 @@ const Advices = () => {
   );
 };
 
-export default Advices;
+const mapStateToProps = (state) => {
+  return {
+    stress: state.stress.stress
+  };
+};
+
+export default connect(mapStateToProps, null)(Advices);
 
 const styles = StyleSheet.create({
   containerAdvice: {
