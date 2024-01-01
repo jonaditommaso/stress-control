@@ -1,4 +1,4 @@
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 import ColorPicker from '../../components/ColorPicker';
 import { useState } from 'react';
 import LetterSize from './LetterSize';
@@ -6,13 +6,14 @@ import Language from './Language';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { getStressColors } from '../../utils/constants';
+import PrimaryButton from '../../components/PrimaryButton';
 
-const Option = ({ option, onSelect }) => (
+const Option = ({ option, onSelect, valueSetted }) => (
   <View style={styles.optionContainer}>
     <Text style={styles.optionText}>{option.text}</Text>
     <View style={styles.optionBottom}>
-      <Text>Espanol</Text>
-      <Button title='Modificar' onPress={() => onSelect(option)} />
+      <Text>{valueSetted ?? 'derf'}</Text>
+      <PrimaryButton title='Modificar' onChange={() => onSelect(option)} width={100} />
     </View>
   </View>
 );
@@ -25,7 +26,7 @@ const Settings = ({ stress }) => {
     { text: 'Color de contenedores', component: <ColorPicker key='containers' close={setSelectedOption} label='Selecciona el color de los contenedores' /> },
     { text: 'Tiempo de contenedores', component: <LetterSize close={setSelectedOption} /> },
     { text: 'Tamaño de letra', component: <LetterSize close={setSelectedOption} /> },
-    { text: 'Idioma', component: <Language close={setSelectedOption} /> }
+    { text: 'Idioma', component: <Language close={setSelectedOption} />, valueSetted: 'Español' }
   ];
 
   const handleOptionSelect = (option) => {
@@ -40,7 +41,7 @@ const Settings = ({ stress }) => {
       <View style={styles.container}>
         <View style={styles.containerOptions}>
           {options.map((option) => (
-            <Option key={option.text} option={option} onSelect={handleOptionSelect} />
+            <Option key={option.text} option={option} onSelect={handleOptionSelect} valueSetted={option.valueSetted} />
           ))}
         </View>
         {selectedOption && selectedOption.component}

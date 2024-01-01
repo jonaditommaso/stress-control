@@ -30,7 +30,7 @@ function App () {
   });
 
   if (!fontsLoaded) {
-    return <Text>Loading...</Text>;
+    return <Text>Cargando...</Text>;
   }
 
   return (
@@ -38,7 +38,7 @@ function App () {
       <StatusBar style='auto' />
       <NavigationContainer>
         <Tab.Navigator
-          initialRouteName='Home' screenOptions={{
+          initialRouteName='Tareas' screenOptions={{
             tabBarStyle: { backgroundColor: getStressColors(stress)[2] },
             tabBarLabelStyle: { color: 'white' },
             tabBarActiveTintColor: 'white',
@@ -46,7 +46,7 @@ function App () {
           }}
         >
           <Tab.Screen
-            name='Settings'
+            name='Configuración'
             component={Settings}
             options={{
               tabBarIcon: ({ color }) => <Ionicons name='ios-settings-outline' size={24} color={color} />,
@@ -56,7 +56,7 @@ function App () {
             }}
           />
           <Tab.Screen
-            name='Home'
+            name='Tareas'
             component={Home}
             options={{
               tabBarIcon: ({ color }) => <FontAwesome5 name='list' size={24} color={color} />,
@@ -66,17 +66,17 @@ function App () {
             }}
           />
           <Tab.Screen
-            name='Advices'
+            name='Consejos'
             component={Advices}
             options={{
-              tabBarIcon: ({ color }) => <MaterialCommunityIcons name='list-status' size={24} color={color} />,
+              tabBarIcon: ({ color }) => <MaterialCommunityIcons name='list-status' size={28} color={color} />,
               headerStyle: {
                 backgroundColor: getStressColors(stress)[0]
               }
             }}
           />
           <Tab.Screen
-            name='Profile'
+            name='Perfil'
             component={Profile}
             options={{
               tabBarIcon: ({ color }) => <Ionicons name='person-circle-outline' size={28} color={color} />,

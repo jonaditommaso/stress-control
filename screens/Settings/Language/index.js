@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
     height: 50,
     alignSelf: 'center',
     borderWidth: 2,
-    borderColor: 'red',
+    borderColor: '#212121',
     borderRadius: 6
   }
 });

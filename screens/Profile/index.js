@@ -39,7 +39,7 @@ const Profile = ({ currentTasks, stress }) => {
           </View>
         </View>
 
-        <PrimaryButton title='Editar perfil' width='90%' />
+        <PrimaryButton title='Editar perfil' width='90%' mv={10} />
       </View>
     </LinearGradient>
   );
