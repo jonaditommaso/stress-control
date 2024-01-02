@@ -5,8 +5,11 @@ import PrimaryButton from '../../components/PrimaryButton';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { getStressColors } from '../../utils/constants';
+import { useTranslation } from 'react-i18next';
 
 const Profile = ({ currentTasks, stress }) => {
+  const { t } = useTranslation();
+
   const totalTasks = currentTasks?.tasks?.length;
   const pendingTasks = (currentTasks?.tasks || []).filter(task => task.status === 'pending');
 
@@ -20,17 +23,17 @@ const Profile = ({ currentTasks, stress }) => {
         <Text style={styles.textName}>Juana Doe</Text>
 
         <View style={styles.tasksSection}>
-          <Text style={styles.textTitle}>Tareas</Text>
+          <Text style={styles.textTitle}>{t('tasks')}</Text>
           <Divider />
           <View style={styles.tasksContainer}>
-            <ContainerData title='Totales' data={`${totalTasks}`} />
-            <ContainerData title='Completadas' data={`${totalTasks - pendingTasks.length}`} />
-            <ContainerData title='Pendientes' data={`${pendingTasks?.length}`} />
+            <ContainerData title={t('totals')} data={`${totalTasks}`} />
+            <ContainerData title={t('completed')} data={`${totalTasks - pendingTasks.length}`} />
+            <ContainerData title={t('pending')} data={`${pendingTasks?.length}`} />
           </View>
         </View>
 
         <View style={styles.tasksSection}>
-          <Text style={styles.textTitle}>Intereses</Text>
+          <Text style={styles.textTitle}>{t('interests')}</Text>
           <Divider />
           <View style={styles.tasksContainer}>
             <ContainerData title='Libros' />
@@ -39,7 +42,7 @@ const Profile = ({ currentTasks, stress }) => {
           </View>
         </View>
 
-        <PrimaryButton title='Editar perfil' width='90%' mv={10} />
+        <PrimaryButton title={t('edit-profile')} width='90%' mv={10} />
       </View>
     </LinearGradient>
   );

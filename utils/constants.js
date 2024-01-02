@@ -35,3 +35,8 @@ export const getStressColors = (stress) => {
 
   if (stress >= 66 && stress <= 100) return STRESS_COLORS.stressed;
 };
+
+export const LANGUAGES = {
+  en: 'English',
+  es: 'Español'
+};

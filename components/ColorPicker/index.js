@@ -8,9 +8,11 @@ import {
 import { colors } from './colors';
 import { useState } from 'react';
 import BottomSheet from '../BottomSheet';
+import { useTranslation } from 'react-i18next';
 
 const ColorPicker = ({ label, close }) => {
   const [value, setValue] = useState(0);
+  const { t } = useTranslation();
 
   return (
     <View>
@@ -43,7 +45,7 @@ const ColorPicker = ({ label, close }) => {
               // handle onPress
             }}
           >
-            <Text style={styles.btnText}>Confirmar</Text>
+            <Text style={styles.btnText}>{t('confirm')}</Text>
           </TouchableOpacity>
         </View>
       </BottomSheet>

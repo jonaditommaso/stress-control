@@ -5,28 +5,35 @@ import LetterSize from './LetterSize';
 import Language from './Language';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
-import { getStressColors } from '../../utils/constants';
+import { LANGUAGES, getStressColors } from '../../utils/constants';
 import PrimaryButton from '../../components/PrimaryButton';
+import i18n from '../../i18next';
+import { useTranslation } from 'react-i18next';
 
-const Option = ({ option, onSelect, valueSetted }) => (
-  <View style={styles.optionContainer}>
-    <Text style={styles.optionText}>{option.text}</Text>
-    <View style={styles.optionBottom}>
-      <Text>{valueSetted ?? 'derf'}</Text>
-      <PrimaryButton title='Modificar' onChange={() => onSelect(option)} width={100} />
+const Option = ({ option, onSelect, valueSetted }) => {
+  const { t } = useTranslation();
+
+  return (
+    <View style={styles.optionContainer}>
+      <Text style={styles.optionText}>{option.text}</Text>
+      <View style={styles.optionBottom}>
+        <Text>{valueSetted ?? 'derf'}</Text>
+        <PrimaryButton title={t('modify')} onChange={() => onSelect(option)} width={100} />
+      </View>
     </View>
-  </View>
-);
+  );
+};
 
 const Settings = ({ stress }) => {
   const [selectedOption, setSelectedOption] = useState(null);
+  const { t } = useTranslation();
 
   const options = [
     { text: 'Color general', component: <ColorPicker key='general' close={setSelectedOption} label='Selecciona el color general' /> },
     { text: 'Color de contenedores', component: <ColorPicker key='containers' close={setSelectedOption} label='Selecciona el color de los contenedores' /> },
     { text: 'Tiempo de contenedores', component: <LetterSize close={setSelectedOption} /> },
     { text: 'Tamaño de letra', component: <LetterSize close={setSelectedOption} /> },
-    { text: 'Idioma', component: <Language close={setSelectedOption} />, valueSetted: 'Español' }
+    { text: t('language'), component: <Language close={setSelectedOption} />, valueSetted: LANGUAGES[i18n.language] }
   ];
 
   const handleOptionSelect = (option) => {

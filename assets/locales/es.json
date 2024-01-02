@@ -1,0 +1,15 @@
+{
+    "tasks": "Tareas",
+    "language": "Idioma",
+    "configuration": "Configuración",
+    "advices": "Consejos",
+    "profile": "Perfil",
+    "modify": "Modificar",
+    "confirm": "Confirmar",
+    "interests": "Intereses",
+    "totals": "Totales",
+    "completed": "Completadas",
+    "pending": "Pendientes",
+    "edit-profile": "Editar perfil",
+    "add-task": "Agregar tarea"
+}

@@ -1,0 +1,15 @@
+{
+    "tasks": "Tasks",
+    "language": "Language",
+    "configuration": "Configuration",
+    "advices": "Advices",
+    "profile": "Profile",
+    "modify": "Modify",
+    "confirm": "Confirm",
+    "interests": "Interests",
+    "totals": "Totals",
+    "completed": "Completed",
+    "pending": "Pending",
+    "edit-profile": "Edit profile",
+    "add-task": "Add task"
+}
