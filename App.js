@@ -52,7 +52,7 @@ function App () {
           }}
         >
           <Tab.Screen
-            name='Configuration'
+            name='Settings'
             component={Settings}
             options={{
               tabBarIcon: ({ color }) => <Ionicons name='ios-settings-outline' size={24} color={color} />,
@@ -60,9 +60,9 @@ function App () {
                 backgroundColor: getStressColors(stress)[0]
               },
               tabBarLabel: () => (
-                <Text style={{ color: 'white', fontSize: 10 }}>{t('configuration')}</Text>
+                <Text style={{ color: 'white', fontSize: 10 }}>{t('settings')}</Text>
               ),
-              headerTitle: t('configuration')
+              headerTitle: t('settings')
             }}
           />
           <Tab.Screen

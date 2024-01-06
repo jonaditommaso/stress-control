@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import ColorPicker from '../../components/ColorPicker';
 import { useState } from 'react';
-import LetterSize from './LetterSize';
 import Language from './Language';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
@@ -9,6 +8,8 @@ import { LANGUAGES, getStressColors } from '../../utils/constants';
 import PrimaryButton from '../../components/PrimaryButton';
 import i18n from '../../i18next';
 import { useTranslation } from 'react-i18next';
+import StressLevels from './StressLevels';
+import StressSupport from './StressSupport';
 
 const Option = ({ option, onSelect, valueSetted }) => {
   const { t } = useTranslation();
@@ -29,10 +30,9 @@ const Settings = ({ stress }) => {
   const { t } = useTranslation();
 
   const options = [
-    { text: 'Color general', component: <ColorPicker key='general' close={setSelectedOption} label='Selecciona el color general' /> },
-    { text: 'Color de contenedores', component: <ColorPicker key='containers' close={setSelectedOption} label='Selecciona el color de los contenedores' /> },
-    { text: 'Tiempo de contenedores', component: <LetterSize close={setSelectedOption} /> },
-    { text: 'Tamaño de letra', component: <LetterSize close={setSelectedOption} /> },
+    { text: t('container-color'), component: <ColorPicker key='containers' close={setSelectedOption} label={t('select-container-color')} /> },
+    { text: t('stress-levels'), component: <StressLevels close={setSelectedOption} /> },
+    { text: t('stress-support'), component: <StressSupport close={setSelectedOption} /> },
     { text: t('language'), component: <Language close={setSelectedOption} />, valueSetted: LANGUAGES[i18n.language] }
   ];
 

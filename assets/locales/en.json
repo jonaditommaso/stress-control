@@ -1,7 +1,7 @@
 {
     "tasks": "Tasks",
     "language": "Language",
-    "configuration": "Configuration",
+    "settings": "Settings",
     "advices": "Advices",
     "profile": "Profile",
     "modify": "Modify",
@@ -11,5 +11,15 @@
     "completed": "Completed",
     "pending": "Pending",
     "edit-profile": "Edit profile",
-    "add-task": "Add task"
+    "add-task": "Add task",
+    "container-color": "Container color",
+    "select-container-color": "Select container color",
+    "low": "Low",
+    "medium": "Medium",
+    "high": "High",
+    "moderately-high": "Moderately high",
+    "stress-levels": "Stress levels",
+    "stress-support": "Stress support",
+    "add-remove-stress-level": "Add or remove stress level",
+    "choose-stress-support": "Choose your stress support level"
 }

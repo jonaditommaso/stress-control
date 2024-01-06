@@ -1,7 +1,7 @@
 {
     "tasks": "Tareas",
     "language": "Idioma",
-    "configuration": "Configuración",
+    "settings": "Configuración",
     "advices": "Consejos",
     "profile": "Perfil",
     "modify": "Modificar",
@@ -11,5 +11,16 @@
     "completed": "Completadas",
     "pending": "Pendientes",
     "edit-profile": "Editar perfil",
-    "add-task": "Agregar tarea"
+    "add-task": "Agregar tarea",
+    "container-color": "Color de contenedores",
+    "select-container-color": "Selecciona el color de los contenedores",
+    "low": "Bajo",
+    "medium": "Medio",
+    "high": "Alto",
+    "moderately-high": "Moderadamente alto",
+    "stress-levels": "Niveles de estrés",
+    "stress-support": "Soporte de estrés",
+    "add-remove-stress-level": "Agregar o quitar nivel de estrés",
+    "choose-stress-support": "Elige el nivel de tu soporte de estrés"
+
 }
