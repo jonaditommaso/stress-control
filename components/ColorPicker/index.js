@@ -9,20 +9,26 @@ import BottomSheet from '../BottomSheet';
 import { useTranslation } from 'react-i18next';
 import PrimaryButton from '../PrimaryButton';
 import { CONTAINER_COLORS } from '../../utils/constants';
+import { connect } from 'react-redux';
+import { changeContainerColors } from '../../redux/actions';
+import { useActions } from '../../hooks/useActions';
 
-const ColorPicker = ({ label, close }) => {
-  const [selectedColors, setSelectedColors] = useState({
-    low: 0,
-    medium: 0,
-    high: 0
-  });
+const ColorPicker = ({ label, close, containerColors }) => {
+  const [selectedColors, setSelectedColors] = useState(containerColors);
   const { t } = useTranslation();
+
+  const { changeContainerColors } = useActions();
 
   const handleColorChange = (containerName, index) => {
     setSelectedColors((prevSelectedColors) => ({
       ...prevSelectedColors,
       [containerName]: index
     }));
+  };
+
+  const onSaveColors = () => {
+    changeContainerColors(selectedColors);
+    close(null);
   };
 
   return (
@@ -53,7 +59,7 @@ const ColorPicker = ({ label, close }) => {
             ))}
           </View>
           <View style={styles.containerButton}>
-            <PrimaryButton title={t('confirm')} />
+            <PrimaryButton title={t('confirm')} onChange={onSaveColors} />
           </View>
         </View>
       </BottomSheet>
@@ -61,7 +67,13 @@ const ColorPicker = ({ label, close }) => {
   );
 };
 
-export default ColorPicker;
+const mapStateToProps = (state) => {
+  return {
+    containerColors: state.containerColors.containerColors
+  };
+};
+
+export default connect(mapStateToProps, { changeContainerColors })(ColorPicker);
 
 const CIRCLE_SIZE = 40;
 const CIRCLE_RING_SIZE = 2;

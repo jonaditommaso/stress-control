@@ -3,21 +3,23 @@ import BottomSheet from '../../../components/BottomSheet';
 import Slider from '@react-native-community/slider';
 import { useTranslation } from 'react-i18next';
 import { useState } from 'react';
+import { connect } from 'react-redux';
+import { useActions } from '../../../hooks/useActions';
+import { updateStressLevelSupport } from '../../../redux/actions';
+import { defineColorByStress } from '../../../utils/defineColorByStress';
 
-const StressSupport = ({ close }) => {
-  const [stressValue, setStressValue] = useState(50);
+const StressSupport = ({ close, stress }) => {
+  const [stressValue, setStressValue] = useState(stress);
   const { t } = useTranslation();
+
+  const { updateStressLevelSupport } = useActions();
 
   const onSliderValueChange = (value) => {
     setStressValue(value);
   };
 
-  const defineColor = () => {
-    const colors = ['#19ee04', '#feda04', '#d00d03'];
-    if (stressValue >= 60 && stressValue < 80) return colors[1];
-    if (stressValue >= 80) return colors[2];
-
-    return colors[0];
+  const onSlidingComplete = () => {
+    updateStressLevelSupport(stressValue);
   };
 
   return (
@@ -31,8 +33,9 @@ const StressSupport = ({ close }) => {
           step={10}
           value={stressValue}
           onValueChange={onSliderValueChange}
-          minimumTrackTintColor={defineColor()}
-          thumbTintColor={defineColor()}
+          minimumTrackTintColor={defineColorByStress(stressValue).color}
+          thumbTintColor={defineColorByStress(stressValue).color}
+          onSlidingComplete={onSlidingComplete}
         />
         <Text style={styles.stressValue}>{stressValue}%</Text>
       </View>
@@ -40,7 +43,13 @@ const StressSupport = ({ close }) => {
   );
 };
 
-export default StressSupport;
+const mapStateToProps = (state) => {
+  return {
+    stress: state.stressSupport.stressSupport
+  };
+};
+
+export default connect(mapStateToProps, { updateStressLevelSupport })(StressSupport);
 
 const styles = StyleSheet.create({
   container: {

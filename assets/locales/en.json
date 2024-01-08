@@ -18,8 +18,10 @@
     "medium": "Medium",
     "high": "High",
     "moderately-high": "Moderately high",
+    "moderatelyHigh": "Moderately high",
     "stress-levels": "Stress levels",
     "stress-support": "Stress support",
     "add-remove-stress-level": "Add or remove stress level",
-    "choose-stress-support": "Choose your stress support level"
+    "choose-stress-support": "Choose your stress support level",
+    "theme": "Theme"
 }

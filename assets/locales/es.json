@@ -18,9 +18,10 @@
     "medium": "Medio",
     "high": "Alto",
     "moderately-high": "Moderadamente alto",
+    "moderatelyHigh": "Moderadamente alto",
     "stress-levels": "Niveles de estrés",
     "stress-support": "Soporte de estrés",
     "add-remove-stress-level": "Agregar o quitar nivel de estrés",
-    "choose-stress-support": "Elige el nivel de tu soporte de estrés"
-
+    "choose-stress-support": "Elige el nivel de tu soporte de estrés",
+    "theme": "Tema"
 }
