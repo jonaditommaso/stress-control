@@ -2,6 +2,8 @@ import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { getStressColors } from '../../utils/constants';
+import { useState } from 'react';
+import CustomModal from '../../components/CustomModal';
 
 const topics = [
   {
@@ -15,32 +17,40 @@ const topics = [
     background: '#DCFCE7',
     subtitle: 'Top tips for managing your money',
     shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
-  },
-  {
-    title: 'Finanzas',
-    background: '#FEF9C3',
-    subtitle: 'Climbing the corporate ladder',
-    shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
-  }, {
-    title: 'Salud',
-    background: '#DBEAFE',
-    subtitle: 'Maintaining a healthy lifestyle',
-    shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
-  },
-  {
-    title: 'Organización',
-    background: '#DCFCE7',
-    subtitle: 'Top tips for managing your money',
-    shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
   }
+  // {
+  //   title: 'Finanzas',
+  //   background: '#FEF9C3',
+  //   subtitle: 'Climbing the corporate ladder',
+  //   shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
+  // }, {
+  //   title: 'Salud',
+  //   background: '#DBEAFE',
+  //   subtitle: 'Maintaining a healthy lifestyle',
+  //   shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
+  // },
+  // {
+  //   title: 'Organización',
+  //   background: '#DCFCE7',
+  //   subtitle: 'Top tips for managing your money',
+  //   shortContent: 'Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.'
+  // }
 ];
 
 const Advices = ({ stress }) => {
+  const [visible, setVisible] = useState(false);
+
   return (
     <LinearGradient
       colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
+      <CustomModal
+        visible={visible}
+        setVisible={setVisible}
+      >
+        <Text>Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.</Text>
+      </CustomModal>
       <ScrollView style={{ marginTop: 10 }}>
         {topics.map((topic, index) => (
           <View key={index} style={styles.containerAdvice}>
@@ -51,7 +61,7 @@ const Advices = ({ stress }) => {
 
             <View style={styles.content}>
               <Text>{topic.shortContent}</Text>
-              <Pressable style={styles.button}>
+              <Pressable style={styles.button} onPress={() => setVisible(true)}>
                 <Text>Leer más</Text>
               </Pressable>
             </View>

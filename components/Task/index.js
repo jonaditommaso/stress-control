@@ -1,13 +1,18 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { CONTAINER_CONFIG } from '../../utils/constants';
+import { CONTAINER_COLORS } from '../../utils/constants';
 
-const Task = ({ item }) => {
+const Task = ({ item, containerColors }) => {
   const { type, text } = item;
 
+  const colorsObject = CONTAINER_COLORS.reduce((acc, item) => {
+    acc[item.name] = item;
+    return acc;
+  }, {});
+
   const taskStyle = {
-    backgroundColor: `${CONTAINER_CONFIG[`${type}`].color}66`,
-    height: CONTAINER_CONFIG[`${type}`].size,
-    borderColor: CONTAINER_CONFIG[`${type}`].color
+    backgroundColor: `${colorsObject[`${type}`].colors[containerColors[type]]}66`,
+    height: colorsObject[`${type}`].size,
+    borderColor: colorsObject[`${type}`].colors[containerColors[type]]
   };
 
   return (

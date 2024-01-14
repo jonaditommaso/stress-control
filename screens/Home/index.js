@@ -3,17 +3,15 @@ import PrimaryButton from '../../components/PrimaryButton';
 import { useState } from 'react';
 import SecondaryButton from '../../components/SecondaryButton';
 import Task from '../../components/Task';
-import TaskModal from '../../components/TaskModal';
+import CustomModal from '../../components/CustomModal';
 import StressCircle from './StressCircle';
-// import TimeSpent from './TimeSpent';
-import MovingComponent from '../../components/MovingContainer';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { useActions } from '../../hooks/useActions';
 import { addTask } from '../../redux/actions';
 import { getStressColors } from '../../utils/constants';
 
-const Home = ({ currentTasks, stress }) => {
+const Home = ({ currentTasks, stress, containerColors }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState(false);
   const [tasks, setTasks] = useState([]);
 
@@ -61,15 +59,14 @@ const Home = ({ currentTasks, stress }) => {
           {/* <TimeSpent /> */}
           <StressCircle text='10' />
         </View>
-        <MovingComponent move={tasks.length > 0}>
+        <View style={styles.containerTasks}>
           <FlatList
             data={tasks}
             ListEmptyComponent={<Text style={{ fontFamily: 'Virgil' }}>No hay items!</Text>}
-            renderItem={({ item }) => <Task item={item} />}
+            renderItem={({ item }) => <Task item={item} containerColors={containerColors} />}
           />
-        </MovingComponent>
-        {/* </ScrollView> */}
-        <TaskModal
+        </View>
+        <CustomModal
           visible={addTaskModalVisible}
           setVisible={setAddTaskModalVisible}
         >
@@ -99,7 +96,7 @@ const Home = ({ currentTasks, stress }) => {
               <PrimaryButton title='Agregar' onChange={() => handleAddTask()} disabled={!modalTask?.text || !modalTask?.type} />
             </View>
           </View>
-        </TaskModal>
+        </CustomModal>
         <PrimaryButton title='Agregar tarea' onChange={() => setAddTaskModalVisible(true)} />
       </View>
     </LinearGradient>
@@ -109,7 +106,8 @@ const Home = ({ currentTasks, stress }) => {
 const mapStateToProps = (state) => {
   return {
     currentTasks: state.tasks,
-    stress: state.stress.stress
+    stress: state.stress.stress,
+    containerColors: state.containerColors.containerColors
   };
 };
 
@@ -119,7 +117,8 @@ const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
     alignItems: 'center',
-    marginVertical: 15
+    marginVertical: 15,
+    justifyContent: 'space-between'
   },
   modal: {
     justifyContent: 'space-between',
@@ -141,5 +140,10 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     width: 340,
     alignSelf: 'center'
+  },
+  containerTasks: {
+    backgroundColor: '#E3E4E5',
+    height: 300,
+    borderRadius: 8
   }
 });

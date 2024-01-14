@@ -42,9 +42,9 @@ export const LANGUAGES = {
 };
 
 export const CONTAINER_COLORS = [
-  { name: 'low', colors: ['#A0E9FF', '#0DA0CC', '#0DCC86', '#0ADA3B'] },
-  { name: 'medium', colors: ['#FF9130', '#F1C24C', '#D8DB14', '#FFFC00'] },
-  { name: 'high', colors: ['#CE5A67', '#C70B21', '#FF4000', '#E40078'] }
+  { name: 'low', size: 30, colors: ['#A0E9FF', '#0DA0CC', '#0DCC86', '#0ADA3B'] },
+  { name: 'medium', size: 50, colors: ['#FF9130', '#F1C24C', '#D8DB14', '#FFFC00'] },
+  { name: 'high', size: 80, colors: ['#CE5A67', '#C70B21', '#FF4000', '#E40078'] }
 ];
 
 export const STRESS_LEVELS = [

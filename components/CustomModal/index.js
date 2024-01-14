@@ -1,7 +1,7 @@
 import { Modal, Pressable, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-const TaskModal = ({ visible, setVisible, children }) => {
+const CustomModal = ({ visible, setVisible, children }) => {
   return (
     <Modal
       animationType='fade'
@@ -9,7 +9,6 @@ const TaskModal = ({ visible, setVisible, children }) => {
       onRequestClose={() => setVisible(false)}
       transparent
       onDismiss={() => setVisible(false)}
-
     >
       <TouchableWithoutFeedback onPressOut={() => setVisible(false)}>
         <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
@@ -33,7 +32,7 @@ const TaskModal = ({ visible, setVisible, children }) => {
   );
 };
 
-export default TaskModal;
+export default CustomModal;
 
 const styles = StyleSheet.create({
   modalContainer: {
