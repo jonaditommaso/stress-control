@@ -28,12 +28,12 @@ const STRESS_COLORS = {
   stressed: ['#FFD1DC', '#FF6F61', '#8B0000']
 };
 
-export const getStressColors = (stress) => {
-  if (stress >= 0 && stress <= 33) return STRESS_COLORS.quiet;
+export const getStressColors = (stress, max) => {
+  const third = max / 3;
 
-  if (stress >= 34 && stress <= 65) return STRESS_COLORS.tense;
-
-  if (stress >= 66 && stress <= 100) return STRESS_COLORS.stressed;
+  if (stress >= 0 && stress <= third) return STRESS_COLORS.quiet;
+  if (stress > third && stress <= third * 2) return STRESS_COLORS.tense;
+  return STRESS_COLORS.stressed;
 };
 
 export const LANGUAGES = {
@@ -42,9 +42,9 @@ export const LANGUAGES = {
 };
 
 export const CONTAINER_COLORS = [
-  { name: 'low', size: 30, colors: ['#A0E9FF', '#0DA0CC', '#0DCC86', '#0ADA3B'] },
-  { name: 'medium', size: 50, colors: ['#FF9130', '#F1C24C', '#D8DB14', '#FFFC00'] },
-  { name: 'high', size: 80, colors: ['#CE5A67', '#C70B21', '#FF4000', '#E40078'] }
+  { name: 'low', size: 50, fontSize: 16, colors: ['#0061A9', '#0DA0CC', '#0DCC86', '#0ADA3B'] },
+  { name: 'medium', size: 65, fontSize: 18, colors: ['#FF9130', '#F1C24C', '#EFA900', '#FF4000'] },
+  { name: 'high', size: 80, fontSize: 18, colors: ['#CE5A67', '#C70B21', '#EE1fff', '#E40078'] }
 ];
 
 export const STRESS_LEVELS = [

@@ -55,7 +55,7 @@ const Settings = ({ currentStress, stressSupport, currentStressLevels, container
 
   return (
     <LinearGradient
-      colors={getStressColors(currentStress)}
+      colors={getStressColors(currentStress, stressSupport)}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>

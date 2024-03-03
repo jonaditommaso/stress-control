@@ -1,7 +1,7 @@
 import { TYPES } from '../types';
 
 const INITIAL_STATE = {
-  stress: 70
+  stress: 0
 };
 
 export const stressReducer = (state = INITIAL_STATE, action) => {

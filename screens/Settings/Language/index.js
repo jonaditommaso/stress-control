@@ -17,22 +17,20 @@ const Language = ({ close }) => {
   };
 
   return (
-    <View>
-      <BottomSheet close={close} title={t('language')} size={150}>
-        <View style={styles.container}>
-          {languages.map(language => (
-            <View style={[styles.containerFlag, language.language === i18n.language && styles.selectedLanguage]} key={language.code}>
-              <Pressable onPress={() => changeLanguage(language.language)}>
-                <Flag
-                  code={language.code}
-                  size={48}
-                />
-              </Pressable>
-            </View>
-          ))}
-        </View>
-      </BottomSheet>
-    </View>
+    <BottomSheet close={close} title={t('language')} size={150}>
+      <View style={styles.container}>
+        {languages.map(language => (
+          <View style={[styles.containerFlag, language.language === i18n.language && styles.selectedLanguage]} key={language.code}>
+            <Pressable onPress={() => changeLanguage(language.language)}>
+              <Flag
+                code={language.code}
+                size={48}
+              />
+            </Pressable>
+          </View>
+        ))}
+      </View>
+    </BottomSheet>
   );
 };
 
