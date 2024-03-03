@@ -3,7 +3,6 @@ import { CONTAINER_COLORS } from '../../utils/constants';
 import { connect } from 'react-redux';
 
 const LittleCircles = ({ containerColors }) => {
-  console.log(containerColors);
   return (
     <View style={styles.container}>
       {Object.keys(containerColors).map(key => (

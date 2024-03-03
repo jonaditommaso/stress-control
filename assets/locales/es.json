@@ -23,5 +23,22 @@
     "stress-support": "Soporte de estrés",
     "add-remove-stress-level": "Agregar o quitar nivel de estrés",
     "choose-stress-support": "Elige el nivel de tu soporte de estrés",
-    "theme": "Tema"
+    "theme": "Tema",
+    "task": "Tarea",
+    "trip": "Viaje",
+    "study": "Estudio",
+    "sports": "Deportes",
+    "social": "Social",
+    "home": "Hogar",
+    "finances": "Finanzas",
+    "work": "Trabajo",
+    "health": "Salud",
+    "other": "Otro",
+    "choose-category": "Escoge una categoría",
+    "new-task": "Nueva tarea",
+    "new-habit": "Nuevo hábito",
+    "long-term": "Largo plazo",
+    "medium-term": "Mediano plazo",
+    "quick-task": "Tarea rápida",
+    "type-of-task": "Tipo de tarea"
 }

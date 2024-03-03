@@ -23,5 +23,22 @@
     "stress-support": "Stress support",
     "add-remove-stress-level": "Add or remove stress level",
     "choose-stress-support": "Choose your stress support level",
-    "theme": "Theme"
+    "theme": "Theme",
+    "task": "Task",
+    "trip": "Trip",
+    "study": "Study",
+    "sports": "Sports",
+    "social": "Social",
+    "home": "Home",
+    "finances": "Finances",
+    "work": "Work",
+    "health": "Health",
+    "other": "Other",
+    "choose-category": "Choose a category",
+    "new-task": "New task",
+    "new-habit": "New habit",
+    "long-term": "Long term",
+    "medium-term": "Medium term",
+    "quick-task": "Quick task",
+    "type-of-task": "Type of task"
 }
