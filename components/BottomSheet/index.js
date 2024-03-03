@@ -17,9 +17,11 @@ const BottomSheet = ({ children, close, title, size = 300 }) => {
       ref={sheet}
       onClose={() => close(null)}
     >
-      <View style={styles.sheetHeader}>
-        <Text style={styles.sheetHeaderTitle}>{title}</Text>
-      </View>
+      {title && (
+        <View style={styles.sheetHeader}>
+          <Text style={styles.sheetHeaderTitle}>{title}</Text>
+        </View>
+      )}
       {children}
     </RBSheet>
   );
