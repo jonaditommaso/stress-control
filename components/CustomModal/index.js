@@ -1,33 +1,51 @@
-import { Modal, Pressable, StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
+import Divider from '../Divider';
 
-const CustomModal = ({ visible, setVisible, children }) => {
+const CustomModal = ({ children, visible, setVisible, height, fullModal, onOk, onClose, onlyCancel, title, disabled }) => {
   return (
     <Modal
       animationType='fade'
       visible={visible}
       onRequestClose={() => setVisible(false)}
-      transparent
       onDismiss={() => setVisible(false)}
+      transparent
     >
-      <TouchableWithoutFeedback onPressOut={() => setVisible(false)}>
-        <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
-          <View style={styles.modalContainer}>
-            <TouchableWithoutFeedback>
-              <View>
-                <View style={styles.modalHeader}>
-                  <Pressable onPress={() => setVisible(false)}>
-                    <Ionicons name='close' size={26} color='black' />
-                  </Pressable>
-                </View>
-                <View style={styles.modalContent}>
-                  {children}
-                </View>
-              </View>
-            </TouchableWithoutFeedback>
+      <View style={{ flex: 1, backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
+        <View style={[
+          styles.modalContainer,
+          {
+            height,
+            width: fullModal ? '100%' : 350,
+            marginTop: !fullModal ? '30%' : undefined,
+            borderRadius: !fullModal ? 8 : undefined
+          }
+        ]}
+        >
+          {title && (
+            <View style={styles.modalTitleContainer}>
+              <Text style={styles.modalTitleText}>{title}</Text>
+              <Divider />
+            </View>
+          )}
+
+          {children}
+
+          <Divider style={{ marginTop: '1rem' }} />
+
+          <View style={styles.containerTextActions}>
+            <Pressable onPress={onClose}>
+              <Text style={styles.textActions}>Cancelar</Text>
+            </Pressable>
+            {!onlyCancel && <View style={{ width: 1, height: '100%', backgroundColor: '#ccc' }} />}
+            {!onlyCancel && (
+              <Pressable onPress={onOk} disabled={disabled}>
+                <Text style={[styles.textActions, disabled && { color: '#ccc' }]}>Aceptar</Text>
+              </Pressable>
+            )}
           </View>
         </View>
-      </TouchableWithoutFeedback>
+      </View>
+
     </Modal>
   );
 };
@@ -36,31 +54,39 @@ export default CustomModal;
 
 const styles = StyleSheet.create({
   modalContainer: {
-    height: 300,
-    width: 350,
     backgroundColor: '#fafafa',
     alignItems: 'center',
     alignSelf: 'center',
-    marginTop: '50%',
+    justifyContent: 'space-around',
     borderWidth: 1,
     borderColor: '#212121',
     elevation: 5,
-    borderRadius: 8,
     shadowOffset: {
       width: 5,
       height: 5
     },
     shadowOpacity: 1,
     shadowRadius: 5,
-    padding: 5
+    padding: 10
   },
-  modalHeader: {
-    height: 30,
-    width: '100%',
+  containerTextActions: {
     flexDirection: 'row',
-    justifyContent: 'flex-end'
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    width: '100%',
+    marginTop: 5
   },
-  modalContent: {
-    flexGrow: 1
+  textActions: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  modalTitleContainer: {
+    width: '100%',
+    alignItems: 'center'
+  },
+  modalTitleText: {
+    padding: 8,
+    fontSize: 18,
+    fontWeight: '600'
   }
 });
