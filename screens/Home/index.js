@@ -2,7 +2,6 @@ import { FlatList, Image, StyleSheet, Text, View } from 'react-native';
 import PrimaryButton from '../../components/PrimaryButton';
 import { useState } from 'react';
 import Task from '../../components/Task';
-// import StressCircle from './StressCircle';
 import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { addTask } from '../../redux/actions';
@@ -10,13 +9,14 @@ import { getStressColors } from '../../utils/constants';
 import TaskModal from './TaskModal';
 import GeneralTypeSelection from './GeneralTypeSelection';
 import CalendarSwiper from '../../components/CalendarSwiper';
+import dayjs from 'dayjs';
 
 const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState({ open: false });
   const [selectGeneralType, setSelectGeneralType] = useState(false);
-  // const [tasks, setTasks] = useState(currentTasks.tasks || []);
+  const [selectedDay, setSelectedDay] = useState(dayjs().format('DD/MM/YYYY'));
 
-  const tasks = currentTasks.tasks || [];
+  const tasks = (currentTasks.tasks || []).filter(task => !task.date || task.date === selectedDay);
 
   return (
     <LinearGradient
@@ -24,9 +24,8 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
       style={{ flex: 1 }}
     >
       <View style={styles.homeContainer}>
-        <View style={{ flexDirection: 'row' }}>
-          <CalendarSwiper />
-        </View>
+        <CalendarSwiper setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
+
         <View style={styles.containerTasks}>
           <FlatList
             data={tasks}
@@ -44,7 +43,6 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
                 item={item}
                 containerColors={containerColors}
                 index={index}
-                // setTasks={setTasks}
               />
             )}
             style={{ flex: 1 }}
@@ -54,7 +52,6 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
           visible={addTaskModalVisible}
           setVisible={setAddTaskModalVisible}
           tasks={tasks}
-          // setTasks={setTasks}
           closeGeneralType={setSelectGeneralType}
         />
 
@@ -81,13 +78,12 @@ const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
     alignItems: 'center',
-    marginVertical: 15,
+    marginBottom: 15,
     justifyContent: 'space-between'
   },
   containerTasks: {
-    backgroundColor: '#fff', // '#E3E4E5',
+    backgroundColor: '#fff',
     height: 520,
-    // flex: 1,
     borderRadius: 10,
     padding: 5,
     width: '98%',

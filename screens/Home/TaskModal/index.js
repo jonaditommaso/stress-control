@@ -13,12 +13,15 @@ import Frequency from '../Frequency';
 import { connect } from 'react-redux';
 import { updateCurrentStress } from '../../../redux/actions';
 import CustomModal from '../../../components/CustomModal';
+import DatePicker from '../../../components/DatePicker';
+import dayjs from 'dayjs';
 
 const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, stress, stressSupport }) => {
   const [modalTask, setModalTask] = useState({});
   const [modalCategories, setModalCategories] = useState(false);
   const [categorySelected, setCategorySelected] = useState('task');
-  // const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const [dateSelected, setDateSelected] = useState(undefined);
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
   const textInputRef = useRef(null);
   const { t } = useTranslation();
 
@@ -45,8 +48,12 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
   };
 
   const handleAddTask = () => {
-    const task = { ...modalTask, status: 'pending', icon: categorySelected };
-    // setTasks([task, ...tasks]);
+    const task = {
+      ...modalTask,
+      status: 'pending',
+      icon: categorySelected,
+      ...(dateSelected && { date: dayjs(dateSelected).format('DD/MM/YYYY') })
+    };
     addTask(task);
     updateStress();
     setModalTask('');
@@ -67,7 +74,17 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
 
   return (
     <View>
-      <CategoriesModal visible={modalCategories} setVisible={setModalCategories} setCategorySelected={setCategorySelected} />
+      <CategoriesModal
+        visible={modalCategories}
+        setVisible={setModalCategories}
+        setCategorySelected={setCategorySelected}
+      />
+
+      <DatePicker
+        visible={datePickerVisible}
+        setVisible={setDatePickerVisible}
+        setDateSelected={setDateSelected}
+      />
 
       <CustomModal
         visible={visible.open}
@@ -121,13 +138,13 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
                 <Frequency />
                 )
               : (
-                <Pressable onPress={() => console.log(true)} style={styles.pressableContainer}>
+                <Pressable onPress={() => setDatePickerVisible(true)} style={styles.pressableContainer}>
                   <View style={styles.categoryTitle}>
                     <MaterialIcons name='calendar-today' size={24} color='black' />
                     <Text style={styles.pressableText}>Fecha</Text>
                   </View>
                   <View>
-                    <Text>12/02/2024</Text>
+                    <Text>{!dateSelected ? 'Sin definir' : dayjs(dateSelected).format('DD/MM/YYYY')}</Text>
                   </View>
                 </Pressable>
                 )
@@ -174,20 +191,14 @@ export default connect(mapStateToProps, { updateCurrentStress })(TaskModal);
 
 const styles = StyleSheet.create({
   modal: {
-    // justifyContent: 'space-between',
-    // height: '90%',
     width: '100%',
     flex: 1
   },
   textInput: {
-    // borderBottomColor: '#212121',
-    // borderBottomWidth: 1,
     borderColor: '#212121',
     borderWidth: 2,
-    // width: 300,
     width: 350,
     fontSize: 18,
-    // paddingTop: 10,
     padding: 7,
     borderRadius: 8,
     alignSelf: 'center',
@@ -198,11 +209,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     fontSize: 18
   },
-  // taskTypeContainer: {
-  //   marginVertical: 5
-  // },
   taskTypeOptions: {
-    // flexDirection: 'row',
     justifyContent: 'space-between',
     width: 340,
     alignSelf: 'center'

@@ -1,7 +1,18 @@
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import Divider from '../Divider';
 
-const CustomModal = ({ children, visible, setVisible, height, fullModal, onOk, onClose, onlyCancel, title, disabled }) => {
+const CustomModal = ({
+  children,
+  visible,
+  setVisible,
+  height,
+  fullModal,
+  onOk,
+  onClose,
+  onlyCancel,
+  title,
+  disabled
+}) => {
   return (
     <Modal
       animationType='fade'
