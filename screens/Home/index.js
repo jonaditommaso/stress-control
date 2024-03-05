@@ -10,11 +10,14 @@ import TaskModal from './TaskModal';
 import GeneralTypeSelection from './GeneralTypeSelection';
 import CalendarSwiper from '../../components/CalendarSwiper';
 import dayjs from 'dayjs';
+import { useTranslation } from 'react-i18next';
 
 const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState({ open: false });
   const [selectGeneralType, setSelectGeneralType] = useState(false);
   const [selectedDay, setSelectedDay] = useState(dayjs().format('DD/MM/YYYY'));
+
+  const { t } = useTranslation();
 
   const tasks = (currentTasks.tasks || []).filter(task => !task.date || task.date === selectedDay);
 
@@ -35,7 +38,7 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
             ListEmptyComponent={
               <View style={{ alignItems: 'center', margin: 100 }}>
                 <Image source={require('../../assets/no-tasks.png')} style={{ height: 350, width: 250 }} />
-                <Text style={{ width: 300, textAlign: 'center', fontWeight: '500' }}>Parece que no tienes actividades hoy</Text>
+                <Text style={{ width: 300, textAlign: 'center', fontWeight: '500' }}>{t('no-activities')}</Text>
               </View>
             }
             renderItem={({ item, index }) => (
@@ -55,7 +58,7 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
           closeGeneralType={setSelectGeneralType}
         />
 
-        <PrimaryButton title='Agregar tarea' onChange={() => setSelectGeneralType(true)} />
+        <PrimaryButton title={t('add-task')} onChange={() => setSelectGeneralType(true)} />
 
         {selectGeneralType && <GeneralTypeSelection close={setSelectGeneralType} setTaskModalVisible={setAddTaskModalVisible} />}
       </View>

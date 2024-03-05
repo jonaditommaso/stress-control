@@ -4,9 +4,11 @@ import { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { editTask } from '../../redux/actions';
 import { useActions } from '../../hooks/useActions';
+import { useTranslation } from 'react-i18next';
 
 const EditModal = ({ visible, setVisible, taskToEdit = {}, currentTasks = {}, index, closeSwipeable }) => {
   const [taskName, setTaskName] = useState('');
+  const { t } = useTranslation();
 
   const { editTask } = useActions();
 
@@ -35,7 +37,7 @@ const EditModal = ({ visible, setVisible, taskToEdit = {}, currentTasks = {}, in
         value={taskName}
         onChangeText={setTaskName}
         style={styles.textInput}
-        placeholder='Tarea'
+        placeholder={t(taskToEdit.activity)}
       />
     </CustomModal>
   );

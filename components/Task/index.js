@@ -10,13 +10,15 @@ import { removeTask, editTask } from '../../redux/actions';
 import { useActions } from '../../hooks/useActions';
 import EditModal from './EditModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useTranslation } from 'react-i18next';
 
 const Task = ({ item, containerColors, index, currentTasks = {} }) => {
   const [editModal, setEditModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(undefined);
-  const { type, text, icon, status } = item;
+  const { type, text, icon, status, activity } = item;
   const { removeTask, editTask } = useActions();
   const swipeableRef = useRef(null);
+  const { t } = useTranslation();
 
   const colorsObject = CONTAINER_COLORS.reduce((acc, item) => {
     acc[item.name] = item;
@@ -89,7 +91,7 @@ const Task = ({ item, containerColors, index, currentTasks = {} }) => {
                 {text}
               </Text>
               <Text style={[styles.textType, { backgroundColor: `${taskStyle.backgroundColor}44`, color: taskStyle.color }]}>
-                Tarea
+                {t(activity)}
               </Text>
             </View>
           </View>

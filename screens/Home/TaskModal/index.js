@@ -52,6 +52,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
       ...modalTask,
       status: 'pending',
       icon: categorySelected,
+      activity: visible.activity,
       ...(dateSelected && { date: dayjs(dateSelected).format('DD/MM/YYYY') })
     };
     addTask(task);
@@ -95,7 +96,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
         onClose={() => setVisible({ open: false })}
         onOk={handleAddTask}
         disabled={!modalTask.type || !modalTask.text}
-        title={visible?.type === 'goal' ? t('new-task') : t('new-habit')}
+        title={visible?.activity === 'task' ? t('new-task') : t('new-habit')}
       >
         <View style={styles.modal}>
 
@@ -106,7 +107,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
               onChangeText={(value) => onChangeTask(value, 'text')}
               ref={textInputRef}
               style={styles.textInput}
-              placeholder='Tarea'
+              placeholder={visible?.activity === 'task' ? t('task') : t('habit')}
             />
           </View>
 

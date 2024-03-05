@@ -8,9 +8,12 @@ import {
   Pressable
 } from 'react-native';
 import { generateDaysList } from './generateDaysList';
+import { useTranslation } from 'react-i18next';
 
-const DiasDelMes = ({ setSelectedDay, selectedDay }) => {
+const CalendarSwiper = ({ setSelectedDay, selectedDay }) => {
   const days = generateDaysList();
+
+  const { t } = useTranslation();
 
   const handleSelection = (date) => {
     setSelectedDay(date);
@@ -45,7 +48,7 @@ const DiasDelMes = ({ setSelectedDay, selectedDay }) => {
                 ]
               }
               >
-                {item.dayWeek}
+                {t(item.dayWeek)}
               </Text>
               <Text
                 style={[
@@ -64,7 +67,7 @@ const DiasDelMes = ({ setSelectedDay, selectedDay }) => {
   );
 };
 
-export default DiasDelMes;
+export default CalendarSwiper;
 
 const styles = StyleSheet.create({
   picker: {

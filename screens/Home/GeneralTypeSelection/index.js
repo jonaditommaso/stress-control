@@ -2,30 +2,33 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 import BottomSheet from '../../../components/BottomSheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Divider from '../../../components/Divider';
+import { useTranslation } from 'react-i18next';
 
 const GeneralTypeSelection = ({ close, setTaskModalVisible }) => {
+  const { t } = useTranslation();
+
   return (
     <BottomSheet close={close} size={130}>
       <View style={styles.container}>
-        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, type: 'habit' })}>
+        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, activity: 'habit' })}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons name='repeat' size={24} color='red' />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Habito</Text>
-            <Text>Actividad recurrente o que se repite periodicamente</Text>
+            <Text style={styles.title}>{t('habit')}</Text>
+            <Text>{t('habit-explanation')}</Text>
           </View>
         </Pressable>
 
         <Divider />
 
-        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, type: 'goal' })}>
+        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, activity: 'task' })}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons name='check' size={24} color='red' />
           </View>
           <View style={styles.textContainer}>
-            <Text style={styles.title}>Tarea</Text>
-            <Text>Actividad unica u objetivo</Text>
+            <Text style={styles.title}>{t('task')}</Text>
+            <Text>{t('task-explanation')}</Text>
           </View>
         </Pressable>
       </View>

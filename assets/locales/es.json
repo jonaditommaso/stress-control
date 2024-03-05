@@ -34,11 +34,22 @@
     "work": "Trabajo",
     "health": "Salud",
     "other": "Otro",
+    "habit": "Hábito",
     "choose-category": "Escoge una categoría",
     "new-task": "Nueva tarea",
     "new-habit": "Nuevo hábito",
     "long-term": "Largo plazo",
     "medium-term": "Mediano plazo",
     "quick-task": "Tarea rápida",
-    "type-of-task": "Tipo de tarea"
+    "type-of-task": "Tipo de tarea",
+    "no-activities": "Parece que no tienes actividades hoy",
+    "habit-explanation": "Actividad recurrente o que se repite periódicamente",
+    "task-explanation": "Actividad única u objetivo",
+    "Mon": "Lun",
+    "Tue": "Mar",
+    "Wed": "Mie",
+    "Thu": "Jue",
+    "Fri": "Vie",
+    "Sat": "Sab",
+    "Sun": "Dom"
 }

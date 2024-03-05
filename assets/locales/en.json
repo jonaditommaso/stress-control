@@ -34,11 +34,22 @@
     "work": "Work",
     "health": "Health",
     "other": "Other",
+    "habit": "Habit",
     "choose-category": "Choose a category",
     "new-task": "New task",
     "new-habit": "New habit",
     "long-term": "Long term",
     "medium-term": "Medium term",
     "quick-task": "Quick task",
-    "type-of-task": "Type of task"
+    "type-of-task": "Type of task",
+    "no-activities": "It looks like you have no activities today",
+    "habit-explanation": "Recurring or periodically recurring activity",
+    "task-explanation": "Single activity or objective",
+    "Mon": "Mon",
+    "Tue": "Tue",
+    "Wed": "Wed",
+    "Thu": "Thu",
+    "Fri": "Fri",
+    "Sat": "Sat",
+    "Sun": "Sun"
 }
