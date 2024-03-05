@@ -6,8 +6,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { getStressColors } from '../../utils/constants';
 import { useTranslation } from 'react-i18next';
+import ActivitiesChart from './ActivitiesChart';
 
-const Profile = ({ currentTasks, stress }) => {
+const Profile = ({ currentTasks, stress, stressSupport }) => {
   const { t } = useTranslation();
 
   const totalTasks = currentTasks?.tasks?.length;
@@ -15,7 +16,7 @@ const Profile = ({ currentTasks, stress }) => {
 
   return (
     <LinearGradient
-      colors={getStressColors(stress)}
+      colors={getStressColors(stress, stressSupport)}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>
@@ -32,7 +33,9 @@ const Profile = ({ currentTasks, stress }) => {
           </View>
         </View>
 
-        <View style={styles.tasksSection}>
+        {totalTasks > 0 && <ActivitiesChart tasks={currentTasks?.tasks} />}
+
+        {/* <View style={styles.tasksSection}>
           <Text style={styles.textTitle}>{t('interests')}</Text>
           <Divider />
           <View style={styles.tasksContainer}>
@@ -40,7 +43,7 @@ const Profile = ({ currentTasks, stress }) => {
             <ContainerData title='Programación' />
             <ContainerData title='Viajes' />
           </View>
-        </View>
+        </View> */}
 
         <PrimaryButton title={t('edit-profile')} width='90%' mv={10} />
       </View>
@@ -51,7 +54,8 @@ const Profile = ({ currentTasks, stress }) => {
 const mapStateToProps = (state) => {
   return {
     currentTasks: state.tasks,
-    stress: state.stress.stress
+    stress: state.stress.stress,
+    stressSupport: state.stressSupport.stressSupport
   };
 };
 
