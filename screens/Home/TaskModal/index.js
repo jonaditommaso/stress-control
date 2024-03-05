@@ -59,6 +59,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
     setModalTask('');
     setVisible({ open: false });
     closeGeneralType(false);
+    setDateSelected(undefined);
   };
 
   const onChangeTask = (value, path) => {
