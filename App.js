@@ -83,7 +83,7 @@ function App () {
               headerTitle: t('tasks')
             }}
           />
-          <Tab.Screen
+          {/* <Tab.Screen
             name='Advices'
             component={Advices}
             options={{
@@ -96,7 +96,7 @@ function App () {
               ),
               headerTitle: t('advices')
             }}
-          />
+          /> */}
           <Tab.Screen
             name='Profile'
             component={Profile}

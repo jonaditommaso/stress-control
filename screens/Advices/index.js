@@ -3,7 +3,6 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { connect } from 'react-redux';
 import { getStressColors } from '../../utils/constants';
 import { useState } from 'react';
-import CustomModal from '../../components/CustomModal';
 
 const topics = [
   {
@@ -45,12 +44,12 @@ const Advices = ({ stress }) => {
       colors={getStressColors(stress)}
       style={{ flex: 1 }}
     >
-      <CustomModal
+      {/* <CustomModal
         visible={visible}
         setVisible={setVisible}
       >
         <Text>Invest in stocks that have high earning potential. Diversify your portfolio to minimize risk.</Text>
-      </CustomModal>
+      </CustomModal> */}
       <ScrollView style={{ marginTop: 10 }}>
         {topics.map((topic, index) => (
           <View key={index} style={styles.containerAdvice}>
