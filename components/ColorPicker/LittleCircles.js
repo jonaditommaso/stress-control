@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   }
 });
 
-// export default LittleCircles;
 const mapStateToProps = (state) => {
   return {
     containerColors: state.containerColors.containerColors

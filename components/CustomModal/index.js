@@ -1,5 +1,6 @@
 import { Modal, Pressable, StyleSheet, Text, View } from 'react-native';
 import Divider from '../Divider';
+import { useTranslation } from 'react-i18next';
 
 const CustomModal = ({
   children,
@@ -11,11 +12,14 @@ const CustomModal = ({
   onClose,
   onlyCancel,
   title,
-  disabled
+  disabled,
+  animationType = 'fade'
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Modal
-      animationType='fade'
+      animationType={animationType}
       visible={visible}
       onRequestClose={() => setVisible(false)}
       onDismiss={() => setVisible(false)}
@@ -45,12 +49,12 @@ const CustomModal = ({
 
           <View style={styles.containerTextActions}>
             <Pressable onPress={onClose}>
-              <Text style={styles.textActions}>Cancelar</Text>
+              <Text style={styles.textActions}>{t('cancel')}</Text>
             </Pressable>
             {!onlyCancel && <View style={{ width: 1, height: '100%', backgroundColor: '#ccc' }} />}
             {!onlyCancel && (
               <Pressable onPress={onOk} disabled={disabled}>
-                <Text style={[styles.textActions, disabled && { color: '#ccc' }]}>Aceptar</Text>
+                <Text style={[styles.textActions, disabled && { color: '#ccc' }]}>{t('accept')}</Text>
               </Pressable>
             )}
           </View>

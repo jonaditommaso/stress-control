@@ -16,6 +16,7 @@ const CategoriesModal = ({ visible, setVisible, setCategorySelected }) => {
       <FlatList
         data={CATEGORIES}
         numColumns={3}
+        style={{ flex: 1 }}
         renderItem={({ item }) => (
           <View key={item.name} style={styles.categoryContainer}>
             <Pressable style={styles.iconContainer} onPress={() => handleOnPress(item.name)}>
