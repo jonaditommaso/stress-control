@@ -31,7 +31,8 @@ const Settings = ({ currentStress, stressSupport, currentStressLevels, container
   const [selectedOption, setSelectedOption] = useState(null);
   const { t } = useTranslation();
 
-  const stressSupportName = t(defineColorByStress(stressSupport).name);
+  const stressLevelsLength = Object.values(currentStressLevels).filter(Boolean).length;
+  const stressSupportName = t(defineColorByStress(stressSupport, stressLevelsLength).name);
 
   const stressLevels = () => {
     const trueKeys = Object.keys(currentStressLevels).filter(key => currentStressLevels[key]);
@@ -55,7 +56,7 @@ const Settings = ({ currentStress, stressSupport, currentStressLevels, container
 
   return (
     <LinearGradient
-      colors={getStressColors(currentStress, stressSupport)}
+      colors={getStressColors(currentStress, stressSupport, stressLevelsLength)}
       style={{ flex: 1 }}
     >
       <View style={styles.container}>

@@ -52,7 +52,6 @@ const styles = StyleSheet.create({
     color: '#ccc'
   },
   checkbox: {
-    margin: 8,
-    color: 'red'
+    margin: 8
   }
 });
