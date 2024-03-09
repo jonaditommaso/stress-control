@@ -53,7 +53,11 @@ const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSuppor
       status: 'pending',
       icon: categorySelected,
       activity: visible.activity,
-      date: dateSelected ? dayjs(dateSelected).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'),
+      date: dateSelected
+        ? dayjs(dateSelected).format('DD/MM/YYYY')
+        : visible.activity === 'habit'
+          ? dayjs().format('DD/MM/YYYY')
+          : undefined,
       ...(visible.activity === 'habit' && !modalTask.frequency && { frequency: { type: 'all-days', value: undefined } })
     };
     addTask(task);

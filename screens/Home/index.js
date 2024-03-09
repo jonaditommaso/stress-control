@@ -22,7 +22,7 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport, curre
 
   const checkDate = (task) => {
     if (task.activity === 'task') {
-      return task.date === selectedDay;
+      return !task.date || task.date === selectedDay;
     } else {
       const { type, value } = task.frequency;
       if (type === 'all-days') return true;
