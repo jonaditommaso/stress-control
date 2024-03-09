@@ -1,9 +1,7 @@
-import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import SecondaryButton from '../../../components/SecondaryButton';
-// import PrimaryButton from '../../../components/PrimaryButton';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useActions } from '../../../hooks/useActions';
-import { buttons } from './buttons';
 import Divider from '../../../components/Divider';
 import { MaterialIcons } from '@expo/vector-icons';
 import CategoriesModal from '../../../components/CategoriesModal';
@@ -15,8 +13,10 @@ import { updateCurrentStress } from '../../../redux/actions';
 import CustomModal from '../../../components/CustomModal';
 import DatePicker from '../../../components/DatePicker';
 import dayjs from 'dayjs';
+import DateSelection from './DateSelection';
+import { ACTIVITIES_TYPE } from '../../../utils/constants';
 
-const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, stress, stressSupport }) => {
+const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSupport }) => {
   const [modalTask, setModalTask] = useState({});
   const [modalCategories, setModalCategories] = useState(false);
   const [categorySelected, setCategorySelected] = useState('task');
@@ -42,7 +42,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
   }, [visible.open]);
 
   const updateStress = () => {
-    const { percent } = buttons.find(element => element.type === modalTask.type);
+    const { percent } = ACTIVITIES_TYPE.find(element => element.type === modalTask.type);
     const stressResult = (stressSupport * percent) / 100;
     updateCurrentStress(stress + stressResult);
   };
@@ -53,7 +53,8 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
       status: 'pending',
       icon: categorySelected,
       activity: visible.activity,
-      ...(dateSelected && { date: dayjs(dateSelected).format('DD/MM/YYYY') })
+      date: dateSelected ? dayjs(dateSelected).format('DD/MM/YYYY') : dayjs().format('DD/MM/YYYY'),
+      ...(visible.activity === 'habit' && !modalTask.frequency && { frequency: { type: 'all-days', value: undefined } })
     };
     addTask(task);
     updateStress();
@@ -91,6 +92,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
       <CustomModal
         visible={visible.open}
         setVisible={setVisible}
+        animationType='slide'
         fullModal
         height='100%'
         onClose={() => setVisible({ open: false })}
@@ -115,10 +117,10 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
             <Divider />
           </View>
 
-          <Pressable onPress={() => setModalCategories(true)} style={styles.pressableContainer}>
+          <TouchableOpacity onPress={() => setModalCategories(true)} style={styles.pressableContainer}>
             <View style={styles.categoryTitle}>
               <MaterialIcons name='category' size={24} color='black' />
-              <Text style={styles.pressableText}>Category</Text>
+              <Text style={styles.pressableText}>{t('category')}</Text>
             </View>
             <View style={styles.categorySelectedContainer}>
               <Text style={[styles.categorySelectedText, { color: categoryComponent.color }]}>
@@ -128,29 +130,26 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
                 {categoryComponent.icon}
               </View>
             </View>
-          </Pressable>
+          </TouchableOpacity>
 
           <View style={{ marginVertical: 5 }}>
             <Divider />
           </View>
 
-          {
-            visible?.type === 'habit'
-              ? (
-                <Frequency />
-                )
-              : (
-                <Pressable onPress={() => setDatePickerVisible(true)} style={styles.pressableContainer}>
-                  <View style={styles.categoryTitle}>
-                    <MaterialIcons name='calendar-today' size={24} color='black' />
-                    <Text style={styles.pressableText}>Fecha</Text>
-                  </View>
-                  <View>
-                    <Text>{!dateSelected ? 'Sin definir' : dayjs(dateSelected).format('DD/MM/YYYY')}</Text>
-                  </View>
-                </Pressable>
-                )
-          }
+          {visible?.activity === 'habit' && (
+            <View>
+              <Frequency setTask={setModalTask} />
+              <View style={{ marginVertical: 5 }}>
+                <Divider />
+              </View>
+            </View>
+          )}
+
+          <DateSelection
+            dateSelected={dateSelected}
+            setDatePickerVisible={setDatePickerVisible}
+            activity={visible.activity}
+          />
 
           <View style={{ marginVertical: 5 }}>
             <Divider />
@@ -159,7 +158,7 @@ const TaskModal = ({ visible, setVisible, tasks, setTasks, closeGeneralType, str
           <View style={styles.taskTypeContainer}>
             <Text style={styles.titleType}>{t('type-of-task')}</Text>
             <View style={styles.taskTypeOptions}>
-              {buttons.map((button, index) => (
+              {ACTIVITIES_TYPE.map((button, index) => (
                 <View key={index} style={{ margin: 5 }}>
                   <SecondaryButton
                     title={t(button.title)}
