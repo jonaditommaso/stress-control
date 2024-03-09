@@ -1,5 +1,5 @@
 import { Pressable, StyleSheet, Text, View, Vibration } from 'react-native';
-import { CONTAINER_COLORS } from '../../utils/constants';
+import { ACTIVITIES_TYPE, CONTAINER_COLORS } from '../../utils/constants';
 import { CATEGORIES } from '../../utils/categories';
 import { useMemo, useRef, useState } from 'react';
 import IconTask from './IconTask';
@@ -12,11 +12,11 @@ import EditModal from './EditModal';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useTranslation } from 'react-i18next';
 
-const Task = ({ item, containerColors, index, currentTasks = {} }) => {
+const Task = ({ item, containerColors, index, currentTasks = {}, stress, stressSupport }) => {
   const [editModal, setEditModal] = useState(false);
   const [taskToEdit, setTaskToEdit] = useState(undefined);
   const { type, text, icon, status, activity } = item;
-  const { removeTask, editTask } = useActions();
+  const { removeTask, editTask, updateCurrentStress } = useActions();
   const swipeableRef = useRef(null);
   const { t } = useTranslation();
 
@@ -37,10 +37,19 @@ const Task = ({ item, containerColors, index, currentTasks = {} }) => {
     return category.icon;
   }, [icon]);
 
+  const updateStress = (action) => {
+    const { percent } = ACTIVITIES_TYPE.find(element => element.type === type);
+    const stressResult = (stressSupport * percent) / 100;
+
+    const operationResult = action === 'remove' ? stress - stressResult : stress + stressResult;
+    updateCurrentStress(operationResult);
+  };
+
   const onRemove = () => {
     const tasks = [...currentTasks.tasks];
     tasks.splice(index, 1);
     removeTask(tasks);
+    updateStress('remove');
   };
 
   const onEdit = () => {
@@ -61,6 +70,7 @@ const Task = ({ item, containerColors, index, currentTasks = {} }) => {
 
     const updatedTasks = tasks.map((task, i) => {
       if (i === index) {
+        updateStress(task.status === 'pending' ? 'remove' : 'add');
         return {
           ...task,
           status: task.status === 'pending' ? 'completed' : 'pending'
@@ -95,9 +105,11 @@ const Task = ({ item, containerColors, index, currentTasks = {} }) => {
               </Text>
             </View>
           </View>
-          <Pressable style={styles.isDone} onPress={() => changeStatus()}>
-            {status === 'completed' && <MaterialCommunityIcons name='check' size={24} color='#28f60b' />}
-          </Pressable>
+          {activity === 'task' && (
+            <Pressable style={styles.isDone} onPress={() => changeStatus()}>
+              {status === 'completed' && <MaterialCommunityIcons name='check' size={24} color='#28f60b' />}
+            </Pressable>
+          )}
         </View>
       </Swipeable>
     </View>
@@ -106,7 +118,9 @@ const Task = ({ item, containerColors, index, currentTasks = {} }) => {
 
 const mapStateToProps = (state) => {
   return {
-    currentTasks: state.tasks
+    currentTasks: state.tasks,
+    stress: state.stress.stress,
+    stressSupport: state.stressSupport.stressSupport
   };
 };
 
