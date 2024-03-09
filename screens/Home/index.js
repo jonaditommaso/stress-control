@@ -11,19 +11,57 @@ import GeneralTypeSelection from './GeneralTypeSelection';
 import CalendarSwiper from '../../components/CalendarSwiper';
 import dayjs from 'dayjs';
 import { useTranslation } from 'react-i18next';
+import { unformatDate } from '../../utils/unformatDate';
 
-const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => {
+const Home = ({ currentTasks = {}, stress, containerColors, stressSupport, currentStressLevels }) => {
   const [addTaskModalVisible, setAddTaskModalVisible] = useState({ open: false });
   const [selectGeneralType, setSelectGeneralType] = useState(false);
   const [selectedDay, setSelectedDay] = useState(dayjs().format('DD/MM/YYYY'));
 
   const { t } = useTranslation();
 
-  const tasks = (currentTasks.tasks || []).filter(task => !task.date || task.date === selectedDay);
+  const checkDate = (task) => {
+    if (task.activity === 'task') {
+      return task.date === selectedDay;
+    } else {
+      const { type, value } = task.frequency;
+      if (type === 'all-days') return true;
+
+      if (type === 'specific-week-days') {
+        const currentDay = dayjs(unformatDate(selectedDay)).format('ddd');
+        return value.includes(currentDay);
+      }
+
+      if (type === 'specific-month-days') {
+        const day = selectedDay.split('/')[0];
+        const numericValues = value.map(element => Number(element));
+        return numericValues.includes(Number(day));
+      }
+
+      if (type === 'repeat') {
+        const calculateDays = (initialDate, dateSelected, number) => {
+          if (dayjs(initialDate).isBefore(dayjs(dateSelected))) {
+            return false;
+          }
+          const differenceDays = dayjs(dateSelected).diff(dayjs(initialDate), 'day');
+          return differenceDays % number === 0;
+        };
+
+        const currentDay = dayjs(unformatDate(selectedDay)).toDate();
+        const settedDay = dayjs(unformatDate(task.date)).toDate();
+        return calculateDays(currentDay, settedDay, Number(value));
+      }
+
+      return false;
+    }
+  };
+
+  const tasks = (currentTasks.tasks || []).filter(task => checkDate(task));
+  const stressLevelsLength = Object.values(currentStressLevels).filter(Boolean).length;
 
   return (
     <LinearGradient
-      colors={getStressColors(stress, stressSupport)}
+      colors={getStressColors(stress, stressSupport, stressLevelsLength)}
       style={{ flex: 1 }}
     >
       <View style={styles.homeContainer}>
@@ -58,7 +96,7 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport }) => 
           closeGeneralType={setSelectGeneralType}
         />
 
-        <PrimaryButton title={t('add-task')} onChange={() => setSelectGeneralType(true)} />
+        <PrimaryButton title={t('add-activity')} onChange={() => setSelectGeneralType(true)} />
 
         {selectGeneralType && <GeneralTypeSelection close={setSelectGeneralType} setTaskModalVisible={setAddTaskModalVisible} />}
       </View>
@@ -71,7 +109,8 @@ const mapStateToProps = (state) => {
     currentTasks: state.tasks,
     stress: state.stress.stress,
     stressSupport: state.stressSupport.stressSupport,
-    containerColors: state.containerColors.containerColors
+    containerColors: state.containerColors.containerColors,
+    currentStressLevels: state.stressLevels.stressLevels
   };
 };
 
