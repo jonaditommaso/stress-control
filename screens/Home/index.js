@@ -64,7 +64,7 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport, curre
       colors={getStressColors(stress, stressSupport, stressLevelsLength)}
       style={{ flex: 1 }}
     >
-      <View style={styles.homeContainer}>
+      <View style={[styles.homeContainer, { marginBottom: addTaskModalVisible.open ? 0 : 15 }]}>
         <CalendarSwiper setSelectedDay={setSelectedDay} selectedDay={selectedDay} />
 
         <View style={styles.containerTasks}>
@@ -89,12 +89,16 @@ const Home = ({ currentTasks = {}, stress, containerColors, stressSupport, curre
             style={{ flex: 1 }}
           />
         </View>
-        <TaskModal
-          visible={addTaskModalVisible}
-          setVisible={setAddTaskModalVisible}
-          tasks={tasks}
-          closeGeneralType={setSelectGeneralType}
-        />
+        {addTaskModalVisible.open && (
+          <View style={styles.overlay}>
+            <TaskModal
+              visible={addTaskModalVisible}
+              setVisible={setAddTaskModalVisible}
+              tasks={tasks}
+              closeGeneralType={setSelectGeneralType}
+            />
+          </View>
+        )}
 
         <PrimaryButton title={t('add-activity')} onChange={() => setSelectGeneralType(true)} />
 
@@ -120,8 +124,16 @@ const styles = StyleSheet.create({
   homeContainer: {
     flex: 1,
     alignItems: 'center',
-    marginBottom: 15,
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
+    height: '100%'
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: '#fff',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    zIndex: 1
   },
   containerTasks: {
     backgroundColor: '#fff',

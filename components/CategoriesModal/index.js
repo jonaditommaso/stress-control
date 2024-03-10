@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   categoryContainer: {
-    width: 60,
+    width: 65,
     margin: 10
   },
   categoryText: {

@@ -60,8 +60,8 @@ const ActivitiesChart = ({ tasks }) => {
         borderWidth: 1,
         elevation: 5,
         shadowOffset: {
-          width: 5,
-          height: 5
+          width: 3,
+          height: 3
         },
         shadowOpacity: 1
       }}

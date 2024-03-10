@@ -5,7 +5,8 @@ import {
   View,
   Text,
   FlatList,
-  Pressable
+  Pressable,
+  Platform
 } from 'react-native';
 import { generateDaysList } from './generateDaysList';
 import { useTranslation } from 'react-i18next';
@@ -20,7 +21,7 @@ const CalendarSwiper = ({ setSelectedDay, selectedDay }) => {
   };
 
   return (
-    <View style={{ flexDirection: 'row' }}>
+    <View style={{ flexDirection: 'row', marginTop: Platform.OS === 'ios' ? 10 : 0 }}>
       <SafeAreaView style={{ flex: 1 }}>
         <FlatList
           data={days}
@@ -88,7 +89,8 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#ccc'
+    backgroundColor: '#ccc',
+    overflow: 'hidden'
   },
   itemWeekday: {
     fontSize: 13,

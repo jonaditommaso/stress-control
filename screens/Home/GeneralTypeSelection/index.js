@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Platform, Pressable, StyleSheet, Text, View } from 'react-native';
 import BottomSheet from '../../../components/BottomSheet';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Divider from '../../../components/Divider';
@@ -7,10 +7,17 @@ import { useTranslation } from 'react-i18next';
 const GeneralTypeSelection = ({ close, setTaskModalVisible }) => {
   const { t } = useTranslation();
 
+  const handleSelectActivityType = (activityType) => {
+    close(null);
+    setTimeout(() => {
+      setTaskModalVisible({ open: true, activity: activityType });
+    }, Platform.OS === 'ios' ? 200 : 0);
+  };
+
   return (
-    <BottomSheet close={close} size={130}>
+    <BottomSheet close={close} size={Platform.OS === 'ios' ? 150 : 130}>
       <View style={styles.container}>
-        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, activity: 'habit' })}>
+        <Pressable style={styles.activityContainer} onPress={() => handleSelectActivityType('habit')}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons name='repeat' size={24} color='red' />
           </View>
@@ -22,7 +29,7 @@ const GeneralTypeSelection = ({ close, setTaskModalVisible }) => {
 
         <Divider />
 
-        <Pressable style={styles.activityContainer} onPress={() => setTaskModalVisible({ open: true, activity: 'task' })}>
+        <Pressable style={styles.activityContainer} onPress={() => handleSelectActivityType('task')}>
           <View style={styles.iconContainer}>
             <MaterialCommunityIcons name='check' size={24} color='red' />
           </View>
