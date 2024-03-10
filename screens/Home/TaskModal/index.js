@@ -1,4 +1,4 @@
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Animated, Dimensions, Keyboard, Platform, StyleSheet, Text, TextInput, TouchableOpacity, TouchableWithoutFeedback, View } from 'react-native';
 import SecondaryButton from '../../../components/SecondaryButton';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useActions } from '../../../hooks/useActions';
@@ -10,11 +10,12 @@ import { useTranslation } from 'react-i18next';
 import Frequency from '../Frequency';
 import { connect } from 'react-redux';
 import { updateCurrentStress } from '../../../redux/actions';
-import CustomModal from '../../../components/CustomModal';
 import DatePicker from '../../../components/DatePicker';
 import dayjs from 'dayjs';
 import DateSelection from './DateSelection';
 import { ACTIVITIES_TYPE } from '../../../utils/constants';
+import TitleSection from '../../../components/TitleSection';
+import ActionButtons from '../../../components/ActionButtons';
 
 const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSupport }) => {
   const [modalTask, setModalTask] = useState({});
@@ -27,8 +28,21 @@ const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSuppor
 
   const { addTask, updateCurrentStress } = useActions();
 
+  const slideAnim = useRef(new Animated.Value(1000)).current;
+
   useEffect(() => {
-    if (visible.open && textInputRef.current) {
+    Animated.timing(
+      slideAnim,
+      {
+        toValue: 0,
+        duration: 500,
+        useNativeDriver: true
+      }
+    ).start();
+  }, [slideAnim]);
+
+  useEffect(() => {
+    if (Platform.OS === 'androind' && visible.open && textInputRef.current) {
       const timer = setTimeout(() => {
         textInputRef.current.focus();
       }, 100);
@@ -79,8 +93,13 @@ const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSuppor
     return category;
   }, [categorySelected]);
 
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
   return (
-    <View>
+    <Animated.View style={{ transform: [{ translateY: slideAnim }] }}>
+
       <CategoriesModal
         visible={modalCategories}
         setVisible={setModalCategories}
@@ -93,94 +112,100 @@ const TaskModal = ({ visible, setVisible, closeGeneralType, stress, stressSuppor
         setDateSelected={setDateSelected}
       />
 
-      <CustomModal
-        visible={visible.open}
-        setVisible={setVisible}
-        animationType='slide'
-        fullModal
-        height='100%'
-        onClose={() => setVisible({ open: false })}
-        onOk={handleAddTask}
-        disabled={!modalTask.type || !modalTask.text}
-        title={visible?.activity === 'task' ? t('new-task') : t('new-habit')}
-      >
-        <View style={styles.modal}>
-
-          <View style={{ padding: 8 }}>
-
-            <TextInput
-              value={modalTask?.text}
-              onChangeText={(value) => onChangeTask(value, 'text')}
-              ref={textInputRef}
-              style={styles.textInput}
-              placeholder={visible?.activity === 'task' ? t('task') : t('habit')}
-            />
-          </View>
-
-          <View style={{ marginVertical: 5 }}>
-            <Divider />
-          </View>
-
-          <TouchableOpacity onPress={() => setModalCategories(true)} style={styles.pressableContainer}>
-            <View style={styles.categoryTitle}>
-              <MaterialIcons name='category' size={24} color='black' />
-              <Text style={styles.pressableText}>{t('category')}</Text>
-            </View>
-            <View style={styles.categorySelectedContainer}>
-              <Text style={[styles.categorySelectedText, { color: categoryComponent.color }]}>
-                {t(categoryComponent.name)}
-              </Text>
-              <View>
-                {categoryComponent.icon}
-              </View>
-            </View>
-          </TouchableOpacity>
-
-          <View style={{ marginVertical: 5 }}>
-            <Divider />
-          </View>
-
-          {visible?.activity === 'habit' && (
+      <View>
+        <TouchableWithoutFeedback onPress={dismissKeyboard}>
+          <View style={styles.container}>
             <View>
-              <Frequency setTask={setModalTask} />
+
+              <TitleSection title={visible?.activity === 'task' ? t('new-task') : t('new-habit')} />
+
+              <View style={{ padding: 8 }}>
+                <TextInput
+                  value={modalTask?.text}
+                  onChangeText={(value) => onChangeTask(value, 'text')}
+                  ref={textInputRef}
+                  style={styles.textInput}
+                  placeholder={visible?.activity === 'task' ? t('task') : t('habit')}
+                />
+
+              </View>
+
+              <View style={{ marginVertical: 5 }}>
+                <Divider />
+              </View>
+
+              <TouchableOpacity onPress={() => setModalCategories(true)} style={styles.pressableContainer}>
+                <View style={styles.categoryTitle}>
+                  <MaterialIcons name='category' size={24} color='black' />
+                  <Text style={styles.pressableText}>{t('category')}</Text>
+                </View>
+                <View style={styles.categorySelectedContainer}>
+                  <Text style={[styles.categorySelectedText, { color: categoryComponent.color }]}>
+                    {t(categoryComponent.name)}
+                  </Text>
+                  <View>
+                    {categoryComponent.icon}
+                  </View>
+                </View>
+              </TouchableOpacity>
+
+              <View style={{ marginVertical: 5 }}>
+                <Divider />
+              </View>
+
+              {visible?.activity === 'habit' && (
+                <View>
+                  <Frequency setTask={setModalTask} />
+                  <View style={{ marginVertical: 5 }}>
+                    <Divider />
+                  </View>
+                </View>
+              )}
+
+              <DateSelection
+                dateSelected={dateSelected}
+                setDatePickerVisible={setDatePickerVisible}
+                activity={visible.activity}
+              />
+
+              <View style={{ marginVertical: 5 }}>
+                <Divider />
+              </View>
+
+              <View style={styles.taskTypeContainer}>
+                <Text style={styles.titleType}>{t('type-of-task')}</Text>
+                <View style={styles.taskTypeOptions}>
+                  {ACTIVITIES_TYPE.map((button, index) => (
+                    <View key={index} style={{ margin: 5 }}>
+                      <SecondaryButton
+                        title={t(button.title)}
+                        onChange={() => onChangeTask(button.type, 'type')}
+                        selected={modalTask?.type === button.type}
+                        customColor={button.customColor}
+                      />
+                    </View>
+                  ))}
+                </View>
+              </View>
+
               <View style={{ marginVertical: 5 }}>
                 <Divider />
               </View>
             </View>
-          )}
+            <View style={{ padding: 10 }}>
+              <Divider />
 
-          <DateSelection
-            dateSelected={dateSelected}
-            setDatePickerVisible={setDatePickerVisible}
-            activity={visible.activity}
-          />
-
-          <View style={{ marginVertical: 5 }}>
-            <Divider />
-          </View>
-
-          <View style={styles.taskTypeContainer}>
-            <Text style={styles.titleType}>{t('type-of-task')}</Text>
-            <View style={styles.taskTypeOptions}>
-              {ACTIVITIES_TYPE.map((button, index) => (
-                <View key={index} style={{ margin: 5 }}>
-                  <SecondaryButton
-                    title={t(button.title)}
-                    onChange={() => onChangeTask(button.type, 'type')}
-                    selected={modalTask?.type === button.type}
-                    customColor={button.customColor}
-                  />
-                </View>
-              ))}
+              <ActionButtons
+                disabled={!modalTask.type || !modalTask.text}
+                onClose={() => setVisible({ open: false })}
+                onOk={handleAddTask}
+              />
             </View>
           </View>
+        </TouchableWithoutFeedback>
 
-          <View style={{ marginVertical: 5 }}>
-            <Divider />
-          </View>
-        </View>
-      </CustomModal>
-    </View>
+      </View>
+    </Animated.View>
 
   );
 };
@@ -195,8 +220,9 @@ const mapStateToProps = (state) => {
 export default connect(mapStateToProps, { updateCurrentStress })(TaskModal);
 
 const styles = StyleSheet.create({
-  modal: {
-    width: '100%',
+  container: {
+    width: Dimensions.get('window').width,
+    justifyContent: 'space-between',
     flex: 1
   },
   textInput: {
