@@ -49,7 +49,9 @@ const Task = ({ item, containerColors, index, currentTasks = {}, stress, stressS
     const tasks = [...currentTasks.tasks];
     tasks.splice(index, 1);
     removeTask(tasks);
-    updateStress('remove');
+    if (item.status === 'pending') {
+      updateStress('remove');
+    }
   };
 
   const onEdit = () => {
